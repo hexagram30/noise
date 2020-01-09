@@ -1,7 +1,7 @@
 extern crate noise;
 
 use noise::utils::*;
-use noise::{Billow, Fbm, HybridMulti, OpenSimplex, Perlin, RidgedMulti, Turbulence};
+use noise::{Billow, Fbm, HybridMulti, Perlin, RidgedMulti, Turbulence};
 use hxgm30noise::modifiers::{Invert, Threshold};
 
 fn main() {
