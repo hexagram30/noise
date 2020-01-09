@@ -1,15 +1,16 @@
 extern crate noise;
 
 use noise::utils::*;
-use noise::{BasicMulti, Billow, Fbm, HybridMulti, OpenSimplex, Perlin, RidgedMulti, Turbulence};
-use hxgm30noise::modifiers::threshold::Threshold;
+use noise::{Billow, Fbm, HybridMulti, OpenSimplex, Perlin, RidgedMulti, Turbulence};
+use hxgm30noise::modifiers::{Invert, Threshold};
 
 fn main() {
     let rm = RidgedMulti::new();
     let thresh = Threshold::new(&rm)
-        .set_cutoff(-0.25);
+        .set_cutoff(-0.4);
+    let invert = Invert::new(&thresh);
 
-    PlaneMapBuilder::new(&thresh)
+    PlaneMapBuilder::new(&invert)
         .set_size(500, 500)
         .build()
         .write_to_file("caves-rm.png");
@@ -27,26 +28,9 @@ fn main() {
     let thresh = Threshold::new(&perlin);
 
     PlaneMapBuilder::new(&thresh)
-        // .set_is_seamless(true)
         .set_size(500, 500)
         .build()
         .write_to_file("caves-perlin.png");
-
-    let open_simplex = OpenSimplex::new();
-    let thresh = Threshold::new(&open_simplex);
-
-    PlaneMapBuilder::new(&thresh)
-        .set_size(500, 500)
-        .build()
-        .write_to_file("caves-simplex.png");
-
-    let basic_multi = BasicMulti::new();
-    let thresh = Threshold::new(&basic_multi);
-
-    PlaneMapBuilder::new(&thresh)
-        .set_size(500, 500)
-        .build()
-        .write_to_file("caves-basicmulti.png");
 
     let fbm = Fbm::new();
     let thresh = Threshold::new(&fbm);
