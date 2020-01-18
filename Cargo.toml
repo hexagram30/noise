@@ -11,3 +11,6 @@ name = "hxgm30noise"
 
 [dependencies]
 noise = "0.6.0"
+
+[[example]]
+name = "caves"
