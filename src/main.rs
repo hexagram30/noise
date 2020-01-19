@@ -9,8 +9,8 @@ fn main() {
     // Default values /////////////////////////////////////////
     let default_opts: Opts = Opts {
         res: Resolution{x: 100, y: 100},
-        res_str: "100,100".to_string(),
-        output: "/tmp/file.png".to_string(),
+        res_str: &"100,100".to_string(),
+        output: &"/tmp/file.png".to_string(),
         seed: 108,
         .. Default::default()
     };
@@ -103,11 +103,12 @@ fn main() {
         .get_matches();
 
     // Convert args to appropriate types //////////////////////
+    let output = matches.value_of("file-name")
+            .unwrap_or(default_opts.output);
     let opts: Opts = Opts{
         inverted: value_t!(matches, "invert?", bool)
             .unwrap_or(default_opts.inverted),
-        output: value_t!(matches, "file-name", String)
-            .unwrap_or(default_opts.output),
+        output: &output.to_string(),
         res: max_coords_or(matches.value_of("x,y")
             .unwrap_or(&default_opts.res_str), default_opts.res),
         seed: value_t!(matches, "seed-number", i64)
@@ -132,30 +133,34 @@ fn main() {
     match matches.subcommand() {
         ("cave", Some(cave_matches)) => {
             // Process the top-level args (noise-types)
+            let cave_opts: Opts = Opts{
+                is_cave: true,
+                ..opts
+            };
             match cave_matches.value_of("cave-type").unwrap() {
                 "simple" => {
                     println!("Creating simple cave ...");
-                    caves::simple(&opts);
+                    caves::simple(&cave_opts);
                 }
                 "linear" => {
                     println!("Creating linear cave ...");
-                    caves::linear(&opts);
+                    caves::linear(&cave_opts);
                 }
                 "jagged-walls" => {
                     println!("Creating jagged-walls cave ...");
-                    caves::jagged_walls(&opts);
+                    caves::jagged_walls(&cave_opts);
                 }
                 "wobbly-walls" => {
                     println!("Creating wobbly-walls cave ...");
-                    caves::wobbly_walls(&opts);
+                    caves::wobbly_walls(&cave_opts);
                 }
                 "fractured" => {
                     println!("Creating fractured cave ...");
-                    caves::fractured(&opts);
+                    caves::fractured(&cave_opts);
                 }
                 "complex" => {
                     println!("Creating complex cave ...");
-                    caves::complex(&opts);
+                    caves::complex(&cave_opts);
                 }
                 _ => unreachable!(),
             }
