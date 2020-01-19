@@ -1,30 +1,18 @@
 #[macro_use]
 extern crate clap;
 
-use clap::{App, AppSettings, Arg};
-
-struct Opts {
-    ascii_size: Vec<i64>,
-    ascii_size_str: String,
-    image_size: Vec<i64>,
-    image_size_str: String,
-    seed: i64,
-    threshold_cutoff: f64,
-    tiled: bool,
-    turbulence: bool,
-}
+use clap::{App, Arg};
+// use hxgm30noise::gen::caves;
+use hxgm30noise::gen::caves::{Opts, Resolution};
 
 fn main() {
     // Default values /////////////////////////////////////////
     let default_opts: Opts = Opts {
-        ascii_size: vec![1i64, 20, 80],
-        ascii_size_str: "20,80".to_string(),
-        image_size: vec![1i64, 100, 100],
-        image_size_str: "100,100".to_string(),
+        res: Resolution{x: 100, y: 100},
+        res_str: "100,100".to_string(),
+        output: "/tmp/file.png".to_string(),
         seed: 108,
-        threshold_cutoff: 0.0,
-        tiled: false,
-        turbulence: false,
+        .. Default::default()
     };
     // Noise types ////////////////////////////////////////////
     let noise_types = [
@@ -47,15 +35,21 @@ fn main() {
         "true",
         "false"];
     // Common args ////////////////////////////////////////////
-    let ascii_size_arg = Arg::with_name("col,row")
-        .short("a")
-        .long("ascii")
-        .help("image size in col,row chars")
-        .takes_value(true);
-    let image_size_arg = Arg::with_name("x,y")
+    let invert_arg = Arg::with_name("invert?")
         .short("i")
-        .long("image")
-        .help("image size in x,y pixels")
+        .long("invert")
+        .help("Swap cave walls and open space")
+        .takes_value(true)
+        .possible_values(&bools);
+    let output_arg = Arg::with_name("file-name")
+        .short("o")
+        .long("output")
+        .help("File where generated data will be saved")
+        .takes_value(true);
+    let res_arg = Arg::with_name("x,y")
+        .short("r")
+        .long("resolution")
+        .help("Image/ascii resolution in x,y pixels")
         .takes_value(true);
     let seed_arg = Arg::with_name("seed-number")
         .short("s")
@@ -70,60 +64,38 @@ fn main() {
         .allow_hyphen_values(true) ;
     let tiled_arg = Arg::with_name("tiled?")
         .long("tiled")
-        .help("Enable (or diabled) tiling")
+        .help("Enable (or diable) tiling")
         .takes_value(true)
         .possible_values(&bools);
     let turbulence_arg = Arg::with_name("turbulence?")
         .long("turbulence")
-        .help("Enable (or diabled) turbulence")
+        .help("Enable (or diable) turbulence")
         .takes_value(true)
         .possible_values(&bools);
-    // Clone command //////////////////////////////////////////
-    let clone = App::new("cave")
+    // Cave command ///////////////////////////////////////////
+    let cave = App::new("cave")
         .about("Genereate random cave")
         .arg(Arg::with_name("cave-type")
             .help("The type of cave to generate")
             .possible_values(&cave_types)
             .required(true))
-        .arg(&ascii_size_arg)
-        .arg(&image_size_arg)
+        .arg(&invert_arg)
+        .arg(&output_arg)
+        .arg(&res_arg)
         .arg(&seed_arg)
         .arg(&threshold_arg)
         .arg(&tiled_arg);
-    // Push command and sub-commands //////////////////////////
-    let push_remote = App::new("remote")
-        .about("pushes remote things")
-        .arg(Arg::with_name("repo")
-            .required(true)
-            .help("The remote repo to push things to"));
-    let push_local = App::new("local")
-        .about("pushes local things");
-    let push = App::new("push")
-        .about("pushes things")
-        .setting(AppSettings::SubcommandRequiredElseHelp)
-        .subcommand(push_remote)
-        .subcommand(push_local);
-    // Add command ////////////////////////////////////////////
-    let add = App::new("add")
-        .about("adds things")
-        .setting(AppSettings::ArgRequiredElseHelp)
-        .arg(Arg::with_name("stuff")
-            .long("stuff")
-            .help("Stuff to add")
-            .takes_value(true)
-            .multiple(true));
     // CLI assembly ///////////////////////////////////////////
     let matches = App::new("noise")
         .about("Hexagram30 Noise Generator")
         .version(crate_version!())
-        .subcommand(clone)
-        .subcommand(push)
-        .subcommand(add)
+        .subcommand(cave)
         .arg(Arg::with_name("type")
             .help("Type of noise generator to use")
             .possible_values(&noise_types))
-        .arg(&ascii_size_arg)
-        .arg(&image_size_arg)
+        .arg(&invert_arg)
+        .arg(&output_arg)
+        .arg(&res_arg)
         .arg(&seed_arg)
         .arg(&threshold_arg)
         .arg(&tiled_arg)
@@ -132,10 +104,12 @@ fn main() {
 
     // Convert args to appropriate types //////////////////////
     let opts: Opts = Opts{
-        ascii_size: coord_vec_or(matches.value_of("col,row")
-            .unwrap_or(&default_opts.ascii_size_str), default_opts.ascii_size),
-        image_size: coord_vec_or(matches.value_of("x,y")
-            .unwrap_or(&default_opts.image_size_str), default_opts.image_size),
+        inverted: value_t!(matches, "invert?", bool)
+            .unwrap_or(default_opts.inverted),
+        output: value_t!(matches, "output", String)
+            .unwrap_or(default_opts.output),
+        res: max_coords_or(matches.value_of("x,y")
+            .unwrap_or(&default_opts.res_str), default_opts.res),
         seed: value_t!(matches, "seed-number", i64)
             .unwrap_or(default_opts.seed),
         threshold_cutoff: value_t!(matches, "cutoff", f64)
@@ -146,8 +120,9 @@ fn main() {
             .unwrap_or(default_opts.turbulence),
         ..default_opts
     };
-    println!("Got ascii size: {:?}", opts.ascii_size);
-    println!("Got image size: {:?}", opts.image_size);
+    println!("Got inverted: {}", opts.inverted);
+    println!("Got output: {}", opts.output);
+    println!("Got resolution: <{}, {}>", opts.res.x, opts.res.y);
     println!("Got seed: {}", opts.seed);
     println!("Got threshold: {}", opts.threshold_cutoff);
     println!("Got tiled: {}", opts.tiled);
@@ -213,16 +188,17 @@ fn main() {
     }
 }
 
-fn coord_vec(val: &str) -> Vec<i64> {
+fn coord_vec(val: &str) -> Vec<usize> {
     return val.split(',')
               .map(|s| s.parse().unwrap())
               .collect()
 }
 
-fn coord_vec_or(val: &str, default: Vec<i64>) -> Vec<i64> {
+fn max_coords_or(val: &str, default: Resolution) -> Resolution {
     if val == "" {
         return default
     } else {
-        return coord_vec(val)
+        let coord = coord_vec(val);
+        return Resolution{x: coord[0], y: coord[1]}
     }
 }

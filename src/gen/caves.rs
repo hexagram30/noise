@@ -16,7 +16,7 @@ pub struct Opts {
     pub output: String,
     pub seed: i64,
     pub res: Resolution,
-    pub size_str: String,
+    pub res_str: String,
     pub threshold_cutoff: f64,
     pub tiled: bool,
     pub turbulence: bool,
