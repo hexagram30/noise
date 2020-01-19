@@ -1,49 +1,49 @@
 extern crate noise;
 
 use hxgm30noise::gen::caves;
-use hxgm30noise::gen::caves::{Opts, Size};
+use hxgm30noise::gen::caves::{Opts, Resolution};
 
 fn main() {
 
-    let size = Size{x: 500, y: 500};
+    let res = Resolution{x: 80, y: 40};
 
     caves::complex(Opts{
         output: "caves-complex-billow.png".to_string(),
         threshold_cutoff: -0.25,
         inverted: true,
-        size,
+        res,
         .. Default::default()
     });
 
     caves::fractured(Opts{
         output: "caves-fractured-hm.png".to_string(),
         threshold_cutoff: 0.1,
-        size,
+        res,
         .. Default::default()
     });
 
     caves::jagged_walls(Opts{
         output: "caves-jagged-walls-fbm.png".to_string(),
-        size,
+        res,
         .. Default::default()
     });
 
     caves::linear(Opts{
         output: "caves-linear-rm.png".to_string(),
         threshold_cutoff: -0.4,
-        size,
+        res,
         .. Default::default()
     });
 
     caves::simple(Opts{
         output: "caves-simple-perlin.png".to_string(),
-        size,
+        res,
         .. Default::default()
     });
 
    caves::wobbly_walls(Opts{
         output: "caves-wobbly-walls-turbulence.png".to_string(),
-        size,
+        res,
         .. Default::default()
     });
 
