@@ -1,5 +1,6 @@
 use noise::{NoiseFn};
-use noise::utils::{NoiseMapBuilder, PlaneMapBuilder};
+use noise::utils::{NoiseMap, NoiseMapBuilder, PlaneMapBuilder};
+use crate::modifiers::{Invert, Threshold};
 
 #[derive(Clone, Copy, Default)]
 pub struct Resolution {
@@ -8,20 +9,21 @@ pub struct Resolution {
 }
 
 #[derive(Default)]
-pub struct Opts {
+pub struct Opts<'a> {
     pub inverted: bool,
-    pub output: String,
+    pub output: &'a str,
     pub seed: i64,
     pub res: Resolution,
-    pub res_str: String,
+    pub res_str: &'a str,
     pub threshold_cutoff: f64,
     pub tiled: bool,
     pub turbulence: bool,
+    pub is_cave: bool,
 }
 
 pub struct Builder<'a> {
     pub noise_fn: &'a dyn NoiseFn<[f64; 3]>,
-    pub opts: &'a Opts,
+    pub opts: &'a Opts<'a>,
 }
 
 impl <'a> Builder<'a> {
@@ -31,12 +33,27 @@ impl <'a> Builder<'a> {
             opts,
         }
     }
-
-    pub fn generate(&self) {
-        PlaneMapBuilder::new(self.noise_fn)
+    fn build(&self, noise_fn: &'a dyn NoiseFn<[f64; 3]>) -> NoiseMap {
+        let noise_map = PlaneMapBuilder::new(noise_fn)
             .set_size(self.opts.res.x, self.opts.res.y)
             .set_is_seamless(self.opts.tiled)
-            .build()
-            .write_to_file(&self.opts.output);
+            .build();
+        return noise_map;
+    }
+    pub fn generate(&self) {
+        if self.opts.is_cave {
+            let noise_fn = &Threshold::new(self.noise_fn)
+                .set_cutoff(self.opts.threshold_cutoff);
+            if self.opts.inverted {
+                let noise_map = self.build(&Invert::new(noise_fn));
+                noise_map.write_to_file(&self.opts.output);
+            } else {
+                let noise_map = self.build(noise_fn);
+                noise_map.write_to_file(&self.opts.output);
+            }
+        } else {
+            let noise_map = self.build(self.noise_fn);
+            noise_map.write_to_file(&self.opts.output);
+        }
     }
 }
