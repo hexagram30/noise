@@ -1,6 +1,6 @@
 [package]
 name = "noise"
-version = "0.1.0"
+version = "0.2.0"
 authors = ["Duncan McGreggor <duncan@cnbb.games>"]
 edition = "2018"
 license = "Apache-2.0"
@@ -10,7 +10,9 @@ repository = "https://github.com/hexagram30/noise"
 name = "hxgm30noise"
 
 [dependencies]
+clap = "2.33.0"
 noise = "0.6.0"
+clap_derive = { git = "https://github.com/clap-rs/clap_derive", optional = true }
 
 [[example]]
 name = "caves"
