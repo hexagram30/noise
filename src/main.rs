@@ -133,34 +133,30 @@ fn main() {
     match matches.subcommand() {
         ("cave", Some(cave_matches)) => {
             // Process the top-level args (noise-types)
-            let cave_opts: Opts = Opts{
-                is_cave: true,
-                ..opts
-            };
             match cave_matches.value_of("cave-type").unwrap() {
                 "simple" => {
                     println!("Creating simple cave ...");
-                    caves::simple(&cave_opts);
+                    caves::simple(&opts);
                 }
                 "linear" => {
                     println!("Creating linear cave ...");
-                    caves::linear(&cave_opts);
+                    caves::linear(&opts);
                 }
                 "jagged-walls" => {
                     println!("Creating jagged-walls cave ...");
-                    caves::jagged_walls(&cave_opts);
+                    caves::jagged_walls(&opts);
                 }
                 "wobbly-walls" => {
                     println!("Creating wobbly-walls cave ...");
-                    caves::wobbly_walls(&cave_opts);
+                    caves::wobbly_walls(&opts);
                 }
                 "fractured" => {
                     println!("Creating fractured cave ...");
-                    caves::fractured(&cave_opts);
+                    caves::fractured(&opts);
                 }
                 "complex" => {
                     println!("Creating complex cave ...");
-                    caves::complex(&cave_opts);
+                    caves::complex(&opts);
                 }
                 _ => unreachable!(),
             }
