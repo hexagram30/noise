@@ -2,8 +2,8 @@
 extern crate clap;
 
 use clap::{App, Arg};
+use hxgm30noise::gen::base::{Opts, Resolution};
 use hxgm30noise::gen::caves;
-use hxgm30noise::gen::caves::{Opts, Resolution};
 
 fn main() {
     // Default values /////////////////////////////////////////
@@ -135,27 +135,27 @@ fn main() {
             match cave_matches.value_of("cave-type").unwrap() {
                 "simple" => {
                     println!("Creating simple cave ...");
-                    caves::simple(opts);
+                    caves::simple(&opts);
                 }
                 "linear" => {
                     println!("Creating linear cave ...");
-                    caves::linear(opts);
+                    caves::linear(&opts);
                 }
                 "jagged-walls" => {
                     println!("Creating jagged-walls cave ...");
-                    caves::jagged_walls(opts);
+                    caves::jagged_walls(&opts);
                 }
                 "wobbly-walls" => {
                     println!("Creating wobbly-walls cave ...");
-                    caves::wobbly_walls(opts);
+                    caves::wobbly_walls(&opts);
                 }
                 "fractured" => {
                     println!("Creating fractured cave ...");
-                    caves::fractured(opts);
+                    caves::fractured(&opts);
                 }
                 "complex" => {
                     println!("Creating complex cave ...");
-                    caves::complex(opts);
+                    caves::complex(&opts);
                 }
                 _ => unreachable!(),
             }
