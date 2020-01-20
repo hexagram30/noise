@@ -1,6 +1,6 @@
 extern crate noise;
 
-use noise::{Billow, Fbm, HybridMulti, Perlin, RidgedMulti, Turbulence};
+use noise::{Billow, Fbm, HybridMulti, Perlin, RidgedMulti, Seedable, Turbulence};
 use crate::base::{Builder, Opts};
 
 pub fn complex(opts: &Opts) {
@@ -10,6 +10,7 @@ pub fn complex(opts: &Opts) {
         ..*opts
     };
     let generator = Billow::new();
+    let generator = generator.set_seed(opts.seed);
     let builder = Builder::new(&generator, cave_opts);
     builder.generate()
 }
@@ -21,6 +22,7 @@ pub fn fractured(opts: &Opts) {
         ..*opts
     };
     let generator = HybridMulti::new();
+    let generator = generator.set_seed(opts.seed);
     let builder = Builder::new(&generator, cave_opts);
     builder.generate()
 }
@@ -32,6 +34,7 @@ pub fn jagged_walls(opts: &Opts) {
         ..*opts
     };
     let generator = Fbm::new();
+    let generator = generator.set_seed(opts.seed);
     let builder = Builder::new(&generator, cave_opts);
     builder.generate()
 }
@@ -44,6 +47,7 @@ pub fn linear(opts: &Opts) {
         ..*opts
     };
     let generator = RidgedMulti::new();
+    let generator = generator.set_seed(opts.seed);
     let builder = Builder::new(&generator, cave_opts);
     builder.generate()
 }
@@ -55,6 +59,7 @@ pub fn simple(opts: &Opts) {
         ..*opts
     };
     let generator = Perlin::new();
+    let generator = generator.set_seed(opts.seed);
     let builder = Builder::new(&generator, cave_opts);
     builder.generate()
 }
@@ -67,6 +72,7 @@ pub fn wobbly_walls(opts: &Opts) {
         ..*opts
     };
     let generator = Perlin::new();
+    let generator = generator.set_seed(opts.seed);
     let generator = Turbulence::new(&generator);
     let builder = Builder::new(&generator, cave_opts);
     builder.generate()

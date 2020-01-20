@@ -14,7 +14,7 @@ pub struct Opts<'a> {
     pub is_cave: bool,
     pub noise_type: &'a str,
     pub output: &'a str,
-    pub seed: i64,
+    pub seed: u32,
     pub res: Resolution,
     pub res_str: &'a str,
     pub threshold_cutoff: f64,

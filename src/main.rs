@@ -101,7 +101,7 @@ fn main() {
         output: &output.to_string(),
         res: max_coords_or(matches.value_of("x,y")
             .unwrap_or(&default_opts.res_str), default_opts.res),
-        seed: value_t!(matches, "seed-number", i64)
+        seed: value_t!(matches, "seed-number", u32)
             .unwrap_or(default_opts.seed),
         threshold_enabled: if matches.is_present("cutoff") {true} else {false},
         threshold_cutoff: value_t!(matches, "cutoff", f64)
