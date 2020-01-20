@@ -5,7 +5,7 @@ use hxgm30noise::gen::caves;
 
 fn main() {
 
-    let res = Resolution{x: 80, y: 40};
+    let res = Resolution{x: 200, y: 200};
 
     caves::complex(&Opts{
         output: &"caves-complex-billow.png".to_string(),

@@ -5,7 +5,8 @@ use crate::base::{Builder, Opts};
 
 pub fn complex(opts: &Opts) {
     let cave_opts: &Opts = &Opts{
-        is_cave: true,
+        noise_type: &"billow".to_string(),
+        threshold_enabled: true,
         ..*opts
     };
     let generator = Billow::new();
@@ -15,7 +16,8 @@ pub fn complex(opts: &Opts) {
 
 pub fn fractured(opts: &Opts) {
     let cave_opts: &Opts = &Opts{
-        is_cave: true,
+        noise_type: &"hybrid-multi".to_string(),
+        threshold_enabled: true,
         ..*opts
     };
     let generator = HybridMulti::new();
@@ -25,7 +27,8 @@ pub fn fractured(opts: &Opts) {
 
 pub fn jagged_walls(opts: &Opts) {
     let cave_opts: &Opts = &Opts{
-        is_cave: true,
+        noise_type: &"fbm".to_string(),
+        threshold_enabled: true,
         ..*opts
     };
     let generator = Fbm::new();
@@ -36,7 +39,8 @@ pub fn jagged_walls(opts: &Opts) {
 pub fn linear(opts: &Opts) {
     let cave_opts: &Opts = &Opts{
         inverted: true,
-        is_cave: true,
+        noise_type: &"ridge-multi".to_string(),
+        threshold_enabled: true,
         ..*opts
     };
     let generator = RidgedMulti::new();
@@ -46,7 +50,8 @@ pub fn linear(opts: &Opts) {
 
 pub fn simple(opts: &Opts) {
     let cave_opts: &Opts = &Opts{
-        is_cave: true,
+        noise_type: &"perlin".to_string(),
+        threshold_enabled: true,
         ..*opts
     };
     let generator = Perlin::new();
@@ -56,7 +61,9 @@ pub fn simple(opts: &Opts) {
 
 pub fn wobbly_walls(opts: &Opts) {
     let cave_opts: &Opts = &Opts{
-        is_cave: true,
+        noise_type: &"perlin".to_string(),
+        threshold_enabled: true,
+        turbulence: true,
         ..*opts
     };
     let generator = Perlin::new();
