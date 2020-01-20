@@ -44,35 +44,12 @@ impl <'a> Builder<'a> {
     }
     pub fn generate(&self) {
         // Permute options
-        // if self.opts.turbulence && self.opts.threshold_enabled && self.opts.inverted {
-        //     let turb = Turbulence::new(self.noise_fn);
-        //     let thresh = Threshold::new(&turb)
-        //         .set_cutoff(self.opts.threshold_cutoff);
-        //     let invert = Invert::new(&thresh);
-        //     let noise_map = self.build(&turb);
-        //     noise_map.write_to_file(&self.opts.output);
-        // } else if self.opts.turbulence && self.opts.inverted {
-        //     let turb = Turbulence::new(self.noise_fn);
-        //     let invert = Invert::new(&turb);
-        //     let noise_map = self.build(&invert);
-        //     noise_map.write_to_file(&self.opts.output);
-        // } else if self.opts.turbulence && self.opts.threshold_enabled {
-        //     let turb = Turbulence::new(self.noise_fn);
-        //     let thresh = Threshold::new(&turb)
-        //         .set_cutoff(self.opts.threshold_cutoff);
-        //     let noise_map = self.build(&thresh);
-        //     noise_map.write_to_file(&self.opts.output);
-        // } else if self.opts.threshold_enabled && self.opts.inverted {
         if self.opts.threshold_enabled && self.opts.inverted {
             let thresh = Threshold::new(self.noise_fn)
                 .set_cutoff(self.opts.threshold_cutoff);
             let invert = Invert::new(&thresh);
             let noise_map = self.build(&invert);
             noise_map.write_to_file(&self.opts.output);
-        // } else if self.opts.turbulence {
-        //     let turb = Turbulence::new(self.noise_fn);
-        //     let noise_map = self.build(&turb);
-        //     noise_map.write_to_file(&self.opts.output);
         } else if self.opts.inverted {
             let invert = Invert::new(self.noise_fn);
             let noise_map = self.build(&invert);
