@@ -31,16 +31,11 @@ fn main() {
         "jagged-walls",
         "fractured",
         "complex"];
-    let bools = [
-        "true",
-        "false"];
     // Common args ////////////////////////////////////////////
     let invert_arg = Arg::with_name("invert?")
         .short("i")
         .long("invert")
-        .help("Swap cave walls and open space")
-        .takes_value(true)
-        .possible_values(&bools);
+        .help("Swap cave walls and open space");
     let output_arg = Arg::with_name("file-name")
         .short("o")
         .long("output")
@@ -64,14 +59,10 @@ fn main() {
         .allow_hyphen_values(true) ;
     let tiled_arg = Arg::with_name("tiled?")
         .long("tiled")
-        .help("Enable (or diable) tiling")
-        .takes_value(true)
-        .possible_values(&bools);
+        .help("Enable (or diable) tiling");
     let turbulence_arg = Arg::with_name("turbulence?")
         .long("turbulence")
-        .help("Enable (or diable) turbulence")
-        .takes_value(true)
-        .possible_values(&bools);
+        .help("Enable (or diable) turbulence");
     // Cave command ///////////////////////////////////////////
     let cave = App::new("cave")
         .about("Genereate random cave")
@@ -106,19 +97,17 @@ fn main() {
     let output = matches.value_of("file-name")
             .unwrap_or(default_opts.output);
     let opts: Opts = Opts{
-        inverted: value_t!(matches, "invert?", bool)
-            .unwrap_or(default_opts.inverted),
+        inverted: if matches.is_present("invert?") {true} else {false},
         output: &output.to_string(),
         res: max_coords_or(matches.value_of("x,y")
             .unwrap_or(&default_opts.res_str), default_opts.res),
         seed: value_t!(matches, "seed-number", i64)
             .unwrap_or(default_opts.seed),
+        threshold_enabled: if matches.is_present("cutoff") {true} else {false},
         threshold_cutoff: value_t!(matches, "cutoff", f64)
             .unwrap_or(default_opts.threshold_cutoff),
-        tiled: value_t!(matches, "tiled?", bool)
-            .unwrap_or(default_opts.tiled),
-        turbulence: value_t!(matches, "turbulence?", bool)
-            .unwrap_or(default_opts.turbulence),
+        tiled: if matches.is_present("tiled?") {true} else {false},
+        turbulence: if matches.is_present("turbulence?") {true} else {false},
         ..default_opts
     };
     println!("Got inverted: {}", opts.inverted);

@@ -11,14 +11,17 @@ pub struct Resolution {
 #[derive(Default)]
 pub struct Opts<'a> {
     pub inverted: bool,
+    pub is_cave: bool,
+    pub noise_type: &'a str,
     pub output: &'a str,
     pub seed: i64,
     pub res: Resolution,
     pub res_str: &'a str,
     pub threshold_cutoff: f64,
+    pub threshold_enabled: bool,
     pub tiled: bool,
     pub turbulence: bool,
-    pub is_cave: bool,
+
 }
 
 pub struct Builder<'a> {
