@@ -1,10 +1,11 @@
 extern crate noise;
 
-use noise::{Billow, Fbm, HybridMulti, Perlin, RidgedMulti, Seedable, Turbulence};
 use crate::base::{Builder, Opts};
+use noise::{Billow, Fbm, HybridMulti, Perlin, RidgedMulti, Seedable, Turbulence};
 
 pub fn complex(opts: &Opts) {
-    let cave_opts: &Opts = &Opts{
+    log::debug!("Setting up generator for complex cave type ...");
+    let cave_opts: &Opts = &Opts {
         noise_type: &"billow".to_string(),
         threshold_enabled: true,
         ..*opts
@@ -16,7 +17,8 @@ pub fn complex(opts: &Opts) {
 }
 
 pub fn fractured(opts: &Opts) {
-    let cave_opts: &Opts = &Opts{
+    log::debug!("Setting up generator for fractured cave type ...");
+    let cave_opts: &Opts = &Opts {
         noise_type: &"hybrid-multi".to_string(),
         threshold_enabled: true,
         ..*opts
@@ -28,7 +30,8 @@ pub fn fractured(opts: &Opts) {
 }
 
 pub fn jagged_walls(opts: &Opts) {
-    let cave_opts: &Opts = &Opts{
+    log::debug!("Setting up generator for jagged cave type ...");
+    let cave_opts: &Opts = &Opts {
         noise_type: &"fbm".to_string(),
         threshold_enabled: true,
         ..*opts
@@ -40,7 +43,8 @@ pub fn jagged_walls(opts: &Opts) {
 }
 
 pub fn linear(opts: &Opts) {
-    let cave_opts: &Opts = &Opts{
+    log::debug!("Setting up generator for linear cave type ...");
+    let cave_opts: &Opts = &Opts {
         inverted: true,
         noise_type: &"ridge-multi".to_string(),
         threshold_enabled: true,
@@ -53,7 +57,8 @@ pub fn linear(opts: &Opts) {
 }
 
 pub fn simple(opts: &Opts) {
-    let cave_opts: &Opts = &Opts{
+    log::debug!("Setting up generator for simple cave type ...");
+    let cave_opts: &Opts = &Opts {
         noise_type: &"perlin".to_string(),
         threshold_enabled: true,
         ..*opts
@@ -65,7 +70,8 @@ pub fn simple(opts: &Opts) {
 }
 
 pub fn wobbly_walls(opts: &Opts) {
-    let cave_opts: &Opts = &Opts{
+    log::debug!("Setting up generator for wobbly cave type ...");
+    let cave_opts: &Opts = &Opts {
         noise_type: &"perlin".to_string(),
         threshold_enabled: true,
         turbulence: true,
