@@ -10,7 +10,8 @@ $(BIN_DIR):
 
 cli: $(BIN_DIR)
 	@cargo build --release
-	@-cp -f $(BIN) $(BIN_DIR)/
+	@rm $(BIN_DIR)/*
+	@cargo install --path . --root .
 
 run: cli
 	@$(BIN)
