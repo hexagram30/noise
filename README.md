@@ -1,10 +1,21 @@
 # noise
 
+[![][build-badge]][build]
+[![][crate-badge]][crate]
+[![][tag-badge]][tag]
+[![][docs-badge]][docs]
+
 *Noise-generation for use in hexagram30 projects*
 
 [![Project Logo][logo]][logo-large]
 
-Based on the [noise-rs][noise-rs] project.
+Based on the [noise-rs][noise-rs] project. Implements two custom noise
+modifiers used for cave generation: `threshold` and `invert`.
+
+## Features
+
+Currently supports cave-like noise generation via the CLI `cave` subcommand,
+with six different cave types to choose from.
 
 ## Examples
 
@@ -41,3 +52,11 @@ to see large image):
 [example]: https://raw.githubusercontent.com/hexagram30/noise/master/assets/images/caves-small.png
 [example-large]: https://raw.githubusercontent.com/hexagram30/noise/master/assets/images/caves.png
 [noise-rs]: https://github.com/Razaekel/noise-rs
+[build]: https://github.com/hexagram30/noise/actions?query=workflow%3Abuild+
+[build-badge]: https://github.com/hexagram30/noise/workflows/build/badge.svg
+[crate]: https://crates.io/crates/hxgm30-noise
+[crate-badge]: https://img.shields.io/crates/v/hxgm30-noise.svg
+[docs]: https://docs.rs/hxgm30-noise/
+[docs-badge]: https://img.shields.io/badge/rust-documentation-blue.svg
+[tag-badge]: https://img.shields.io/github/hexagram30/noise/twyg.svg
+[tag]: https://github.com/hexagram30/noise/tags
