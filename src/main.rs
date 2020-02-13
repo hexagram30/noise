@@ -10,10 +10,10 @@ use twyg;
 fn main() {
     // Default values /////////////////////////////////////////
     let default_opts: Opts = Opts {
-        log_level: &"debug".to_string(),
-        output: &"/tmp/file.png".to_string(),
+        log_level: &String::from("debug"),
+        output: &String::from("/tmp/file.png"),
         res: Resolution { x: 100, y: 100 },
-        res_str: &"100,100".to_string(),
+        res_str: &String::from("100,100"),
         seed: 108,
         ..Default::default()
     };
@@ -156,15 +156,7 @@ fn main() {
         Ok(_) => {}
         Err(error) => panic!("Could not setup logger: {:?}", error),
     };
-
-    log::debug!("Got inverted: {}", opts.inverted);
-    log::debug!("Got log-level: {}", opts.log_level);
-    log::debug!("Got output: {}", opts.output);
-    log::debug!("Got resolution: <{}, {}>", opts.res.x, opts.res.y);
-    log::debug!("Got seed: {}", opts.seed);
-    log::debug!("Got threshold: {}", opts.threshold_cutoff);
-    log::debug!("Got tiled: {}", opts.tiled);
-    log::debug!("Got turbulence: {}", opts.turbulence);
+    log::trace!("Got options: {:?}", opts);
 
     // Process the subcommands ////////////////////////////////
     match matches.subcommand() {

@@ -3,13 +3,13 @@ use log;
 use noise::utils::{NoiseMap, NoiseMapBuilder, PlaneMapBuilder};
 use noise::NoiseFn;
 
-#[derive(Clone, Copy, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct Resolution {
     pub x: usize,
     pub y: usize,
 }
 
-#[derive(Default)]
+#[derive(Debug, Default)]
 pub struct Opts<'a> {
     pub inverted: bool,
     pub is_cave: bool,
