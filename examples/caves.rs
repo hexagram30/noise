@@ -8,7 +8,7 @@ fn main() {
     let log_opts = twyg::LoggerOpts {
         colored: true,
         file: String::from(""),
-        level: String::from("debug"),
+        level: String::from("info"),
         report_caller: true,
     };
 

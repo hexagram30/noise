@@ -13,6 +13,7 @@ pub struct Resolution {
 pub struct Opts<'a> {
     pub inverted: bool,
     pub is_cave: bool,
+    pub log_level: &'a str,
     pub noise_type: &'a str,
     pub output: &'a str,
     pub seed: u32,
