@@ -27,7 +27,6 @@ impl<'a, T> Threshold<'a, T> {
             ..self
         }
     }
-
 }
 
 impl<'a, T> NoiseFn<T> for Threshold<'a, T> {

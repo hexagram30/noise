@@ -8,9 +8,7 @@ pub struct Invert<'a, T: 'a> {
 
 impl<'a, T> Invert<'a, T> {
     pub fn new(source: &'a dyn NoiseFn<T>) -> Self {
-        Self {
-            source,
-        }
+        Self { source }
     }
 }
 
