@@ -1,7 +1,7 @@
 [package]
 name = "hxgm30-noise"
 description = "Noise-generation for use in hexagram30 projects"
-version = "0.2.0"
+version = "0.3.0"
 authors = ["Duncan McGreggor <duncan@cnbb.games>"]
 edition = "2018"
 license = "Apache-2.0"
