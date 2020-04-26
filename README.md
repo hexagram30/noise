@@ -58,5 +58,5 @@ to see large image):
 [crate-badge]: https://img.shields.io/crates/v/hxgm30-noise.svg
 [docs]: https://docs.rs/hxgm30-noise/
 [docs-badge]: https://img.shields.io/badge/rust-documentation-blue.svg
-[tag-badge]: https://img.shields.io/github/hexagram30/noise/twyg.svg
+[tag-badge]: https://img.shields.io/github/v/tag/hexagram30/noise.svg?sort=semver
 [tag]: https://github.com/hexagram30/noise/tags
