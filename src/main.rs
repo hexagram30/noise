@@ -147,7 +147,7 @@ fn main() {
     };
     let log_opts = twyg::LoggerOpts {
         colored: true,
-        file: String::from(""),
+        file: None,
         level: opts.log_level.to_string(),
         report_caller: true,
     };
