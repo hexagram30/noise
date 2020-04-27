@@ -9,10 +9,18 @@ pub struct Resolution {
     pub y: usize,
 }
 
+#[derive(Clone, Copy, Debug, Default)]
+pub struct LevelsOpts {
+    pub min: f64,
+    pub max: f64,
+    pub step: f64,
+}
+
 #[derive(Debug, Default)]
 pub struct Opts<'a> {
     pub inverted: bool,
     pub is_cave: bool,
+    pub levels: LevelsOpts,
     pub log_level: &'a str,
     pub noise_type: &'a str,
     pub output: &'a str,
@@ -59,6 +67,7 @@ impl<'a> Builder<'a> {
             noise_map.write_to_file(&self.opts.output);
         } else {
             let noise_map = self.build(self.noise_fn);
+            // XXX add gradient here, for experimentation ...
             noise_map.write_to_file(&self.opts.output);
         }
     }
