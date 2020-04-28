@@ -2,7 +2,7 @@
 extern crate clap;
 
 use clap::{App, Arg};
-use hxgm30noise::gen::base::{Opts, Resolution};
+use hxgm30noise::common::{Opts, Resolution};
 use hxgm30noise::gen::caves;
 use log;
 use twyg;

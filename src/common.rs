@@ -1,5 +1,4 @@
 use crate::modifiers::{Invert, Threshold};
-use log;
 use noise::utils::{NoiseMap, NoiseMapBuilder, PlaneMapBuilder};
 use noise::NoiseFn;
 
@@ -20,6 +19,8 @@ pub struct LevelsOpts {
 pub struct Opts<'a> {
     pub inverted: bool,
     pub is_cave: bool,
+    pub is_image: bool,
+    pub is_ascii: bool,
     pub levels: LevelsOpts,
     pub log_level: &'a str,
     pub noise_type: &'a str,
@@ -70,9 +71,5 @@ impl<'a> Builder<'a> {
         } else {
             self.noise_map = self.build(self.noise_fn);
         }
-    }
-
-    pub fn write_image(&self) {
-        self.noise_map.write_to_file(&self.opts.output);
     }
 }

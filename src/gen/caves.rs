@@ -1,6 +1,5 @@
-extern crate noise;
+use crate::common::{Builder, Opts};
 
-use crate::base::{Builder, Opts};
 use noise::{Billow, Fbm, HybridMulti, Perlin, RidgedMulti, Seedable, Turbulence};
 
 pub fn complex(opts: &Opts) {
@@ -14,7 +13,14 @@ pub fn complex(opts: &Opts) {
     let generator = generator.set_seed(opts.seed);
     let mut builder = Builder::new(&generator, cave_opts);
     builder.generate();
-    builder.write_image();
+    if opts.is_image {
+        use crate::image::BuilderWriter;
+        builder.write();
+    }
+    if opts.is_ascii {
+        use crate::ascii::BuilderWriter;
+        builder.write();
+    }
 }
 
 pub fn fractured(opts: &Opts) {
@@ -28,7 +34,14 @@ pub fn fractured(opts: &Opts) {
     let generator = generator.set_seed(opts.seed);
     let mut builder = Builder::new(&generator, cave_opts);
     builder.generate();
-    builder.write_image();
+    if opts.is_image {
+        use crate::image::BuilderWriter;
+        builder.write();
+    }
+    if opts.is_ascii {
+        use crate::ascii::BuilderWriter;
+        builder.write();
+    }
 }
 
 pub fn jagged_walls(opts: &Opts) {
@@ -42,7 +55,14 @@ pub fn jagged_walls(opts: &Opts) {
     let generator = generator.set_seed(opts.seed);
     let mut builder = Builder::new(&generator, cave_opts);
     builder.generate();
-    builder.write_image();
+    if opts.is_image {
+        use crate::image::BuilderWriter;
+        builder.write();
+    }
+    if opts.is_ascii {
+        use crate::ascii::BuilderWriter;
+        builder.write();
+    }
 }
 
 pub fn linear(opts: &Opts) {
@@ -57,7 +77,14 @@ pub fn linear(opts: &Opts) {
     let generator = generator.set_seed(opts.seed);
     let mut builder = Builder::new(&generator, cave_opts);
     builder.generate();
-    builder.write_image();
+    if opts.is_image {
+        use crate::image::BuilderWriter;
+        builder.write();
+    }
+    if opts.is_ascii {
+        use crate::ascii::BuilderWriter;
+        builder.write();
+    }
 }
 
 pub fn simple(opts: &Opts) {
@@ -71,7 +98,14 @@ pub fn simple(opts: &Opts) {
     let generator = generator.set_seed(opts.seed);
     let mut builder = Builder::new(&generator, cave_opts);
     builder.generate();
-    builder.write_image();
+    if opts.is_image {
+        use crate::image::BuilderWriter;
+        builder.write();
+    }
+    if opts.is_ascii {
+        use crate::ascii::BuilderWriter;
+        builder.write();
+    }
 }
 
 pub fn wobbly_walls(opts: &Opts) {
@@ -87,5 +121,12 @@ pub fn wobbly_walls(opts: &Opts) {
     let generator = Turbulence::new(&generator);
     let mut builder = Builder::new(&generator, cave_opts);
     builder.generate();
-    builder.write_image();
+    if opts.is_image {
+        use crate::image::BuilderWriter;
+        builder.write();
+    }
+    if opts.is_ascii {
+        use crate::ascii::BuilderWriter;
+        builder.write();
+    }
 }

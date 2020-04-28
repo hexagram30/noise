@@ -1,6 +1,6 @@
 extern crate noise;
 
-use hxgm30noise::gen::base::{Opts, Resolution};
+use hxgm30noise::common::{Opts, Resolution};
 use hxgm30noise::gen::caves;
 use twyg;
 
@@ -19,47 +19,54 @@ fn main() {
 
     let res = Resolution { x: 200, y: 200 };
     let seed = 108;
+    let is_image = true;
 
     caves::complex(&Opts {
-        output: &"caves-complex-billow.png".to_string(),
+        output: "caves-complex-billow.png",
         threshold_cutoff: -0.25,
+        is_image,
         res,
         seed,
         ..Default::default()
     });
 
     caves::fractured(&Opts {
-        output: &"caves-fractured-hm.png".to_string(),
+        output: "caves-fractured-hm.png",
         threshold_cutoff: 0.1,
+        is_image,
         res,
         seed,
         ..Default::default()
     });
 
     caves::jagged_walls(&Opts {
-        output: &"caves-jagged-walls-fbm.png".to_string(),
+        output: "caves-jagged-walls-fbm.png",
+        is_image,
         res,
         seed,
         ..Default::default()
     });
 
     caves::linear(&Opts {
-        output: &"caves-linear-rm.png".to_string(),
+        output: "caves-linear-rm.png",
         threshold_cutoff: -0.4,
+        is_image,
         res,
         seed,
         ..Default::default()
     });
 
     caves::simple(&Opts {
-        output: &"caves-simple-perlin.png".to_string(),
+        output: "caves-simple-perlin.png",
+        is_image,
         res,
         seed,
         ..Default::default()
     });
 
     caves::wobbly_walls(&Opts {
-        output: &"caves-wobbly-walls-turbulence.png".to_string(),
+        output: "caves-wobbly-walls-turbulence.png",
+        is_image,
         res,
         seed,
         ..Default::default()
