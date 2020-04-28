@@ -23,6 +23,12 @@ run-cave-help: cli
 	@$(BIN) cave --help
 
 examples:
+	@cargo run --example=ascii-caves
 	@cargo run --example=caves
+	@cargo run --example=levels
+
+clean:
+	@cargo clean
+	@rm -rf example_images/*
 
 .PHONY: examples
