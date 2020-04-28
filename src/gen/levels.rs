@@ -3,12 +3,12 @@ use crate::modifiers::levels::Levels;
 // use noise::Utils::ColorGradient;
 use noise::{Billow, Fbm, HybridMulti, Perlin, RidgedMulti, Seedable, Turbulence};
 
-pub fn complex(opts: &Opts) {
+pub fn complex(opts: Opts) {
     log::debug!("Setting up generator for complex level type ...");
-    let levels_opts: &Opts = &Opts {
+    let levels_opts: Opts = Opts {
         noise_type: &"billow".to_string(),
         threshold_enabled: false,
-        ..*opts
+        ..opts
     };
     let generator = Billow::new();
     let generator = generator.set_seed(opts.seed);
@@ -17,7 +17,7 @@ pub fn complex(opts: &Opts) {
         opts.levels.max,
         opts.levels.step,
     );
-    let mut builder = Builder::new(&generator, levels_opts);
+    let mut builder = Builder::new(&generator, &levels_opts);
     builder.generate();
     if opts.is_image {
         use crate::image::BuilderWriter;
@@ -29,12 +29,12 @@ pub fn complex(opts: &Opts) {
     }
 }
 
-pub fn fractured(opts: &Opts) {
+pub fn fractured(opts: Opts) {
     log::debug!("Setting up generator for fractured level type ...");
-    let levels_opts: &Opts = &Opts {
+    let levels_opts: Opts = Opts {
         noise_type: &"hybrid-multi".to_string(),
         threshold_enabled: false,
-        ..*opts
+        ..opts
     };
     let generator = HybridMulti::new();
     let generator = generator.set_seed(opts.seed);
@@ -43,7 +43,7 @@ pub fn fractured(opts: &Opts) {
         opts.levels.max,
         opts.levels.step,
     );
-    let mut builder = Builder::new(&generator, levels_opts);
+    let mut builder = Builder::new(&generator, &levels_opts);
     builder.generate();
     if opts.is_image {
         use crate::image::BuilderWriter;
@@ -55,12 +55,12 @@ pub fn fractured(opts: &Opts) {
     }
 }
 
-pub fn jagged_walls(opts: &Opts) {
+pub fn jagged_walls(opts: Opts) {
     log::debug!("Setting up generator for jagged level type ...");
-    let levels_opts: &Opts = &Opts {
+    let levels_opts: Opts = Opts {
         noise_type: &"fbm".to_string(),
         threshold_enabled: false,
-        ..*opts
+        ..opts
     };
     let generator = Fbm::new();
     let generator = generator.set_seed(opts.seed);
@@ -69,7 +69,7 @@ pub fn jagged_walls(opts: &Opts) {
         opts.levels.max,
         opts.levels.step,
     );
-    let mut builder = Builder::new(&generator, levels_opts);
+    let mut builder = Builder::new(&generator, &levels_opts);
     builder.generate();
     if opts.is_image {
         use crate::image::BuilderWriter;
@@ -81,13 +81,13 @@ pub fn jagged_walls(opts: &Opts) {
     }
 }
 
-pub fn linear(opts: &Opts) {
+pub fn linear(opts: Opts) {
     log::debug!("Setting up generator for linear level type ...");
-    let levels_opts: &Opts = &Opts {
+    let levels_opts: Opts = Opts {
         inverted: true,
         noise_type: &"ridge-multi".to_string(),
         threshold_enabled: false,
-        ..*opts
+        ..opts
     };
     let generator = RidgedMulti::new();
     let generator = generator.set_seed(opts.seed);
@@ -96,7 +96,7 @@ pub fn linear(opts: &Opts) {
         opts.levels.max,
         opts.levels.step,
     );
-    let mut builder = Builder::new(&generator, levels_opts);
+    let mut builder = Builder::new(&generator, &levels_opts);
     builder.generate();
     if opts.is_image {
         use crate::image::BuilderWriter;
@@ -108,12 +108,12 @@ pub fn linear(opts: &Opts) {
     }
 }
 
-pub fn simple(opts: &Opts) {
+pub fn simple(opts: Opts) {
     log::debug!("Setting up generator for simple level type ...");
-    let levels_opts: &Opts = &Opts {
+    let levels_opts: Opts = Opts {
         noise_type: &"perlin".to_string(),
         threshold_enabled: false,
-        ..*opts
+        ..opts
     };
     let generator = Perlin::new();
     let generator = generator.set_seed(opts.seed);
@@ -122,7 +122,7 @@ pub fn simple(opts: &Opts) {
         opts.levels.max,
         opts.levels.step,
     );
-    let mut builder = Builder::new(&generator, levels_opts);
+    let mut builder = Builder::new(&generator, &levels_opts);
     builder.generate();
     if opts.is_image {
         use crate::image::BuilderWriter;
@@ -134,13 +134,13 @@ pub fn simple(opts: &Opts) {
     }
 }
 
-pub fn wobbly_walls(opts: &Opts) {
+pub fn wobbly_walls(opts: Opts) {
     log::debug!("Setting up generator for wobbly level type ...");
-    let levels_opts: &Opts = &Opts {
+    let levels_opts: Opts = Opts {
         noise_type: &"perlin".to_string(),
         threshold_enabled: false,
         turbulence: true,
-        ..*opts
+        ..opts
     };
     let generator = Perlin::new();
     let generator = generator.set_seed(opts.seed);
@@ -150,7 +150,7 @@ pub fn wobbly_walls(opts: &Opts) {
         opts.levels.max,
         opts.levels.step,
     );
-    let mut builder = Builder::new(&generator, levels_opts);
+    let mut builder = Builder::new(&generator, &levels_opts);
     builder.generate();
     if opts.is_image {
         use crate::image::BuilderWriter;

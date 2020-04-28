@@ -21,7 +21,7 @@ fn main() {
     let seed = 108;
     let is_image = true;
 
-    caves::complex(&Opts {
+    caves::complex(Opts {
         output: "caves-complex-billow.png",
         threshold_cutoff: -0.25,
         is_image,
@@ -30,7 +30,7 @@ fn main() {
         ..Default::default()
     });
 
-    caves::fractured(&Opts {
+    caves::fractured(Opts {
         output: "caves-fractured-hm.png",
         threshold_cutoff: 0.1,
         is_image,
@@ -39,7 +39,7 @@ fn main() {
         ..Default::default()
     });
 
-    caves::jagged_walls(&Opts {
+    caves::jagged_walls(Opts {
         output: "caves-jagged-walls-fbm.png",
         is_image,
         res,
@@ -47,7 +47,7 @@ fn main() {
         ..Default::default()
     });
 
-    caves::linear(&Opts {
+    caves::linear(Opts {
         output: "caves-linear-rm.png",
         threshold_cutoff: -0.4,
         is_image,
@@ -56,7 +56,7 @@ fn main() {
         ..Default::default()
     });
 
-    caves::simple(&Opts {
+    caves::simple(Opts {
         output: "caves-simple-perlin.png",
         is_image,
         res,
@@ -64,7 +64,7 @@ fn main() {
         ..Default::default()
     });
 
-    caves::wobbly_walls(&Opts {
+    caves::wobbly_walls(Opts {
         output: "caves-wobbly-walls-turbulence.png",
         is_image,
         res,

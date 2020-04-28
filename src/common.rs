@@ -1,6 +1,7 @@
 use crate::modifiers::{Invert, Threshold};
 use noise::utils::{NoiseMap, NoiseMapBuilder, PlaneMapBuilder};
 use noise::NoiseFn;
+use std::collections::HashMap;
 
 #[derive(Clone, Copy, Debug, Default)]
 pub struct Resolution {
@@ -8,6 +9,33 @@ pub struct Resolution {
     pub y: usize,
 }
 
+#[derive(Clone, Debug, Default)]
+pub struct Char {
+    pub value: f64,
+    pub chr: char,
+    pub color: Option<String>,
+}
+
+#[derive(Clone, Debug, Default)]
+pub struct ASCIIMapper {
+    pub chars: Vec<Char>,
+    pub lookup: HashMap<String, char>,
+}
+
+impl ASCIIMapper {
+    pub fn new(chars: Vec<Char>) -> Self {
+        let mut lookup = HashMap::new();
+        for Char {
+            value,
+            chr,
+            color: _,
+        } in chars.iter()
+        {
+            lookup.insert(format!("{:.1}", value), *chr);
+        }
+        return ASCIIMapper { chars, lookup };
+    }
+}
 #[derive(Clone, Copy, Debug, Default)]
 pub struct LevelsOpts {
     pub min: f64,
@@ -15,12 +43,13 @@ pub struct LevelsOpts {
     pub step: f64,
 }
 
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default)]
 pub struct Opts<'a> {
     pub inverted: bool,
     pub is_cave: bool,
     pub is_image: bool,
     pub is_ascii: bool,
+    pub ascii_mapper: ASCIIMapper,
     pub levels: LevelsOpts,
     pub log_level: &'a str,
     pub noise_type: &'a str,

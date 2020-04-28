@@ -165,27 +165,27 @@ fn main() {
             match cave_matches.value_of("cave-type").unwrap() {
                 "simple" => {
                     log::info!("Creating simple cave ...");
-                    caves::simple(&opts);
+                    caves::simple(opts.clone());
                 }
                 "linear" => {
                     log::info!("Creating linear cave ...");
-                    caves::linear(&opts);
+                    caves::linear(opts.clone());
                 }
                 "jagged-walls" => {
                     log::info!("Creating jagged-walls cave ...");
-                    caves::jagged_walls(&opts);
+                    caves::jagged_walls(opts.clone());
                 }
                 "wobbly-walls" => {
                     log::info!("Creating wobbly-walls cave ...");
-                    caves::wobbly_walls(&opts);
+                    caves::wobbly_walls(opts.clone());
                 }
                 "fractured" => {
                     log::info!("Creating fractured cave ...");
-                    caves::fractured(&opts);
+                    caves::fractured(opts.clone());
                 }
                 "complex" => {
                     log::info!("Creating complex cave ...");
-                    caves::complex(&opts);
+                    caves::complex(opts);
                 }
                 _ => unreachable!(),
             }

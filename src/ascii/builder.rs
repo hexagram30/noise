@@ -1,8 +1,8 @@
-use crate::common::Builder;
+use crate::common::{ASCIIMapper, Builder};
 // use crate::util::clamp;
 use noise::utils::NoiseMap;
 use std::fs::File;
-use std::io::Write;
+use std::io::{LineWriter, Write};
 use std::{self, path::Path};
 
 // const ASCII_MAX_WIDTH: u8 = 255;
@@ -10,11 +10,11 @@ use std::{self, path::Path};
 // const DEFAULT_CHARS: &str = ".,-:;+=!*0%#".chars();
 
 pub trait ASCIIWriter {
-    fn write(&self, filename: &str);
+    fn write(&self, filename: &str, mapper: &ASCIIMapper);
 }
 
 impl ASCIIWriter for NoiseMap {
-    fn write(&self, filename: &str) {
+    fn write(&self, filename: &str, mapper: &ASCIIMapper) {
         // Create the output directory for the images, if it doesn't already exist
         let directory = "example_images/";
         let target_dir = Path::new(directory);
@@ -26,27 +26,40 @@ impl ASCIIWriter for NoiseMap {
         // Concatenate the directory to the filename string
         let file_path = target_dir.join(filename);
         let display = file_path.display();
+        let (width, height) = self.size();
 
-        // Collect the values from f64 into u8 in a separate vec
-        // let (width, height) = self.size();
-        // let mut pixels: Vec<u8> = Vec::with_capacity(width * height);
-
-        // for i in &self.map {
-        //     pixels.push((clamp(i * 0.5 + 0.5, 0.0, 1.0) * 255.0) as u8);
+        // XXX Ugh! self.map is private :-( (external crate) So we can't do this:
+        // let data = self.map.iter().map(|x| format!("{}", x)).collect::<Vec<String>>();
+        //
+        // Which means we're going to have to do this the hard, inefficient way ...
+        //
+        // If we just want to use the floats as-is:
+        // let mut values: Vec<f64> = Vec::with_capacity(width * height);
+        // for x in 0..width {
+        //     for y in 0..height {
+        //         values.push(self.get_value(x, y));
+        //     }
         // }
+        //
+        // If we want to build everything in place:
+        let mut tile = String::from("");
+        for y in 0..height {
+            for x in 0..width {
+                let key = format!("{:.1}", self.get_value(x, y));
+                match mapper.lookup.get(&key) {
+                    Some(ascii) => tile.push(*ascii),
+                    _ => (),
+                }
+            }
+            tile.push('\n');
+        }
 
-        // let _ = image::save_buffer(
-        //     &Path::new(&file_path),
-        //     &*pixels,
-        //     self.size.0 as u32,
-        //     self.size.1 as u32,
-        //     image::ColorType::L8,
-        // );
-        let mut file = match File::create(&file_path) {
+        let file = match File::create(&file_path) {
             Err(why) => panic!("couldn't create {}: {}", display, why.to_string()),
             Ok(file) => file,
         };
-        match file.write_all("XXX".as_bytes()) {
+        let mut file = LineWriter::new(file);
+        match file.write_all(tile.as_bytes()) {
             Err(why) => panic!("couldn't write to {}: {}", display, why.to_string()),
             Ok(_) => println!("\nFinished generating {}", filename),
         }
@@ -59,6 +72,7 @@ pub trait BuilderWriter {
 
 impl BuilderWriter for Builder<'_> {
     fn write(&self) {
-        self.noise_map.write(&self.opts.output);
+        self.noise_map
+            .write(&self.opts.output, &self.opts.ascii_mapper);
     }
 }
