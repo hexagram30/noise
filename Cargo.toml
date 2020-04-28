@@ -14,7 +14,9 @@ edition = "2018"
 name = "hxgm30noise"
 
 [dependencies]
+ansi_term = "0.12.1"
 clap = "2.33"
+image-data = "0.2.0"
 log = "0.4.8"
 noise = "0.6.0"
 twyg = "0.1.7"

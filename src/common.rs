@@ -1,4 +1,6 @@
 use crate::modifiers::{Invert, Threshold};
+use ansi_term::Colour::RGB;
+use imgdata::color::{self, Color};
 use noise::utils::{NoiseMap, NoiseMapBuilder, PlaneMapBuilder};
 use noise::NoiseFn;
 use std::collections::HashMap;
@@ -19,19 +21,23 @@ pub struct Char {
 #[derive(Clone, Debug, Default)]
 pub struct ASCIIMapper {
     pub chars: Vec<Char>,
-    pub lookup: HashMap<String, char>,
+    pub lookup: HashMap<String, String>,
 }
 
 impl ASCIIMapper {
     pub fn new(chars: Vec<Char>) -> Self {
         let mut lookup = HashMap::new();
-        for Char {
-            value,
-            chr,
-            color: _,
-        } in chars.iter()
-        {
-            lookup.insert(format!("{:.1}", value), *chr);
+        for Char { value, chr, color } in chars.iter() {
+            let mut chr_str = chr.to_string();
+            match color {
+                Some(color) => {
+                    let c = color::from_hex(color.clone());
+                    let [r, g, b] = c.rgb();
+                    chr_str = RGB(r, g, b).paint(chr_str.as_str()).to_string();
+                }
+                None => (),
+            }
+            lookup.insert(format!("{:.1}", value), chr_str);
         }
         return ASCIIMapper { chars, lookup };
     }
