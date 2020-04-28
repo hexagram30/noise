@@ -36,11 +36,16 @@ pub struct Opts<'a> {
 pub struct Builder<'a> {
     pub noise_fn: &'a dyn NoiseFn<[f64; 3]>,
     pub opts: &'a Opts<'a>,
+    pub noise_map: NoiseMap,
 }
 
 impl<'a> Builder<'a> {
     pub fn new(noise_fn: &'a dyn NoiseFn<[f64; 3]>, opts: &'a Opts) -> Self {
-        Self { noise_fn, opts }
+        Self {
+            noise_fn,
+            opts,
+            noise_map: NoiseMap::new(0, 0),
+        }
     }
     fn build(&self, noise_fn: &'a dyn NoiseFn<[f64; 3]>) -> NoiseMap {
         let noise_map = PlaneMapBuilder::new(noise_fn)
@@ -49,26 +54,25 @@ impl<'a> Builder<'a> {
             .build();
         return noise_map;
     }
-    pub fn generate(&self) {
+    pub fn generate(&mut self) {
         log::debug!("Generating ...");
         // Permute options
         if self.opts.threshold_enabled && self.opts.inverted {
             let thresh = Threshold::new(self.noise_fn).set_cutoff(self.opts.threshold_cutoff);
             let invert = Invert::new(&thresh);
-            let noise_map = self.build(&invert);
-            noise_map.write_to_file(&self.opts.output);
+            self.noise_map = self.build(&invert);
         } else if self.opts.inverted {
             let invert = Invert::new(self.noise_fn);
-            let noise_map = self.build(&invert);
-            noise_map.write_to_file(&self.opts.output);
+            self.noise_map = self.build(&invert);
         } else if self.opts.threshold_enabled {
             let thresh = Threshold::new(self.noise_fn).set_cutoff(self.opts.threshold_cutoff);
-            let noise_map = self.build(&thresh);
-            noise_map.write_to_file(&self.opts.output);
+            self.noise_map = self.build(&thresh);
         } else {
-            let noise_map = self.build(self.noise_fn);
-            // XXX add gradient here, for experimentation ...
-            noise_map.write_to_file(&self.opts.output);
+            self.noise_map = self.build(self.noise_fn);
         }
+    }
+
+    pub fn write_image(&self) {
+        self.noise_map.write_to_file(&self.opts.output);
     }
 }

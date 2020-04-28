@@ -12,8 +12,9 @@ pub fn complex(opts: &Opts) {
     };
     let generator = Billow::new();
     let generator = generator.set_seed(opts.seed);
-    let builder = Builder::new(&generator, cave_opts);
-    builder.generate()
+    let mut builder = Builder::new(&generator, cave_opts);
+    builder.generate();
+    builder.write_image();
 }
 
 pub fn fractured(opts: &Opts) {
@@ -25,8 +26,9 @@ pub fn fractured(opts: &Opts) {
     };
     let generator = HybridMulti::new();
     let generator = generator.set_seed(opts.seed);
-    let builder = Builder::new(&generator, cave_opts);
-    builder.generate()
+    let mut builder = Builder::new(&generator, cave_opts);
+    builder.generate();
+    builder.write_image();
 }
 
 pub fn jagged_walls(opts: &Opts) {
@@ -38,8 +40,9 @@ pub fn jagged_walls(opts: &Opts) {
     };
     let generator = Fbm::new();
     let generator = generator.set_seed(opts.seed);
-    let builder = Builder::new(&generator, cave_opts);
-    builder.generate()
+    let mut builder = Builder::new(&generator, cave_opts);
+    builder.generate();
+    builder.write_image();
 }
 
 pub fn linear(opts: &Opts) {
@@ -52,8 +55,9 @@ pub fn linear(opts: &Opts) {
     };
     let generator = RidgedMulti::new();
     let generator = generator.set_seed(opts.seed);
-    let builder = Builder::new(&generator, cave_opts);
-    builder.generate()
+    let mut builder = Builder::new(&generator, cave_opts);
+    builder.generate();
+    builder.write_image();
 }
 
 pub fn simple(opts: &Opts) {
@@ -65,8 +69,9 @@ pub fn simple(opts: &Opts) {
     };
     let generator = Perlin::new();
     let generator = generator.set_seed(opts.seed);
-    let builder = Builder::new(&generator, cave_opts);
-    builder.generate()
+    let mut builder = Builder::new(&generator, cave_opts);
+    builder.generate();
+    builder.write_image();
 }
 
 pub fn wobbly_walls(opts: &Opts) {
@@ -80,6 +85,7 @@ pub fn wobbly_walls(opts: &Opts) {
     let generator = Perlin::new();
     let generator = generator.set_seed(opts.seed);
     let generator = Turbulence::new(&generator);
-    let builder = Builder::new(&generator, cave_opts);
-    builder.generate()
+    let mut builder = Builder::new(&generator, cave_opts);
+    builder.generate();
+    builder.write_image();
 }

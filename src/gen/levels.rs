@@ -17,8 +17,9 @@ pub fn complex(opts: &Opts) {
         opts.levels.max,
         opts.levels.step,
     );
-    let builder = Builder::new(&generator, levels_opts);
+    let mut builder = Builder::new(&generator, levels_opts);
     builder.generate();
+    builder.write_image();
 }
 
 pub fn fractured(opts: &Opts) {
@@ -35,8 +36,9 @@ pub fn fractured(opts: &Opts) {
         opts.levels.max,
         opts.levels.step,
     );
-    let builder = Builder::new(&generator, levels_opts);
-    builder.generate()
+    let mut builder = Builder::new(&generator, levels_opts);
+    builder.generate();
+    builder.write_image();
 }
 
 pub fn jagged_walls(opts: &Opts) {
@@ -53,8 +55,9 @@ pub fn jagged_walls(opts: &Opts) {
         opts.levels.max,
         opts.levels.step,
     );
-    let builder = Builder::new(&generator, levels_opts);
-    builder.generate()
+    let mut builder = Builder::new(&generator, levels_opts);
+    builder.generate();
+    builder.write_image();
 }
 
 pub fn linear(opts: &Opts) {
@@ -72,8 +75,9 @@ pub fn linear(opts: &Opts) {
         opts.levels.max,
         opts.levels.step,
     );
-    let builder = Builder::new(&generator, levels_opts);
-    builder.generate()
+    let mut builder = Builder::new(&generator, levels_opts);
+    builder.generate();
+    builder.write_image();
 }
 
 pub fn simple(opts: &Opts) {
@@ -90,8 +94,9 @@ pub fn simple(opts: &Opts) {
         opts.levels.max,
         opts.levels.step,
     );
-    let builder = Builder::new(&generator, levels_opts);
-    builder.generate()
+    let mut builder = Builder::new(&generator, levels_opts);
+    builder.generate();
+    builder.write_image();
 }
 
 pub fn wobbly_walls(opts: &Opts) {
@@ -110,6 +115,7 @@ pub fn wobbly_walls(opts: &Opts) {
         opts.levels.max,
         opts.levels.step,
     );
-    let builder = Builder::new(&generator, levels_opts);
-    builder.generate()
+    let mut builder = Builder::new(&generator, levels_opts);
+    builder.generate();
+    builder.write_image();
 }
