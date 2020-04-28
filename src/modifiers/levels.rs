@@ -1,4 +1,4 @@
-use crate::util::FloatIterator;
+use crate::util::{clamp, linear_interpolate, FloatIterator};
 use noise::NoiseFn;
 
 /// Noise function that maps the output value from the source function onto a
@@ -158,19 +158,4 @@ impl<'a, T> NoiseFn<T> for Levels<'a, T> {
 
 fn clamp_index(index: isize, min: usize, max: usize) -> usize {
     clamp(index, min as isize, max as isize) as usize
-}
-
-#[inline]
-fn clamp<T: PartialOrd>(val: T, min: T, max: T) -> T {
-    assert!(max >= min);
-    match () {
-        _ if val < min => min,
-        _ if val > max => max,
-        _ => val,
-    }
-}
-
-#[inline]
-fn linear_interpolate(a: f64, b: f64, x: f64) -> f64 {
-    x.mul_add(b - a, a)
 }

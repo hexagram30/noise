@@ -1,3 +1,20 @@
+// Copied from https://github.com/Razaekel/noise-rs/blob/develop/src/math.rs
+#[inline]
+pub fn clamp<T: PartialOrd>(val: T, min: T, max: T) -> T {
+    assert!(max >= min);
+    match () {
+        _ if val < min => min,
+        _ if val > max => max,
+        _ => val,
+    }
+}
+
+// Copied from https://github.com/Razaekel/noise-rs/blob/develop/src/math.rs
+#[inline]
+pub fn linear_interpolate(a: f64, b: f64, x: f64) -> f64 {
+    x.mul_add(b - a, a)
+}
+
 // Copied from: https://stackoverflow.com/a/47869373
 /// produces: [ linear_interpol(start, end, i/steps) | i <- 0..steps ]
 /// (does NOT include "end")
