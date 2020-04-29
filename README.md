@@ -40,6 +40,8 @@ The following will generate a `test.png` image in the `./example_images` directo
 ./bin/hxgm30-noise -s 2 -r 800,800 -t -0.2 -o test.png cave complex
 ```
 
+## Example Output
+
 Here's a thumnail of six different cave systems generated with this tool (click
 to see large image):
 
