@@ -9,6 +9,30 @@ pub fn clamp<T: PartialOrd>(val: T, min: T, max: T) -> T {
     }
 }
 
+pub fn binary_search(data: &Vec<f64>, item: f64) -> f64 {
+    let result = data.binary_search_by(|x| {
+        x.partial_cmp(&item)
+            .expect("Binary search comparison failed!")
+    });
+    let index = match result {
+        Ok(r) => r,
+        Err(r) => r,
+    };
+    if index >= data.len() {
+        let last_item = data.last().unwrap();
+        return *last_item;
+    }
+    let found = data[index];
+    if index == 0 || data[index] == item {
+        return found;
+    }
+    let lower = data[index - 1];
+    if item - lower < found - item {
+        return lower;
+    }
+    return found;
+}
+
 // Copied from https://github.com/Razaekel/noise-rs/blob/develop/src/math.rs
 #[inline]
 pub fn linear_interpolate(a: f64, b: f64, x: f64) -> f64 {
@@ -115,6 +139,24 @@ impl ExactSizeIterator for FloatIterator {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn test_binary_search() {
+        let nums = vec![-2.0, -1.0, 0.0, 1.0, 1.5, 2.0, 10.0];
+        assert_eq!(binary_search(&nums, -2.5), -2.0);
+        assert_eq!(binary_search(&nums, -1.9), -2.0);
+        assert_eq!(binary_search(&nums, -1.1), -1.0);
+        assert_eq!(binary_search(&nums, -0.9), -1.0);
+        assert_eq!(binary_search(&nums, -0.01), 0.0);
+        assert_eq!(binary_search(&nums, 0.01), 0.0);
+        assert_eq!(binary_search(&nums, 1.2), 1.0);
+        assert_eq!(binary_search(&nums, 1.4), 1.5);
+        assert_eq!(binary_search(&nums, 1.9), 2.0);
+        assert_eq!(binary_search(&nums, 2.1), 2.0);
+        assert_eq!(binary_search(&nums, 5.0), 2.0);
+        assert_eq!(binary_search(&nums, 7.0), 10.0);
+        assert_eq!(binary_search(&nums, 21.0), 10.0);
+    }
 
     #[test]
     fn test_float_iterator_count() {
