@@ -7,7 +7,7 @@ license = "Apache-2.0"
 authors = ["Duncan McGreggor <duncan@cnbb.games>"]
 repository = "https://github.com/hexagram30/noise"
 documentation = "https://docs.rs/hxgm30-noise/"
-exclude = ["/.github", "/resources", ".gitignore"]
+exclude = ["/.github", "/resources", ".gitignore", "/assets"]
 edition = "2018"
 
 [lib]
