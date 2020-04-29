@@ -1,6 +1,7 @@
 use crate::modifiers::{Invert, Threshold};
 use ansi_term::Colour::RGB;
 use imgdata::color::{self, Color};
+use log;
 use noise::utils::{NoiseMap, NoiseMapBuilder, PlaneMapBuilder};
 use noise::NoiseFn;
 use std::collections::HashMap;
@@ -37,7 +38,9 @@ impl ASCIIMapper {
                 }
                 None => (),
             }
-            lookup.insert(format!("{:.1}", value), chr_str);
+            let k = format!("{:.2}", value);
+            log::debug!("Adding key, value: <{}, {}>", k, chr_str);
+            lookup.insert(k, chr_str);
         }
         return ASCIIMapper { chars, lookup };
     }
@@ -46,7 +49,14 @@ impl ASCIIMapper {
 pub struct LevelsOpts {
     pub min: f64,
     pub max: f64,
-    pub step: f64,
+    pub steps: u64,
+    // pub precision: u8,
+}
+
+impl LevelsOpts {
+    pub fn step(&self) -> f64 {
+        return (self.max - self.min) / (self.steps as f64);
+    }
 }
 
 #[derive(Clone, Debug, Default)]

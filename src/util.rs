@@ -176,6 +176,12 @@ mod tests {
             ["-2.00", "-1.50", "-1.00", "-0.50", "0.00"]
         );
         assert_eq!(
+            FloatIterator::new(-1.0, 1.0, 5)
+                .map(|x| format!("{:.1$}", x, 2))
+                .collect::<Vec<String>>(),
+            ["-1.00", "-0.50", "0.00", "0.50", "1.00"]
+        );
+        assert_eq!(
             FloatIterator::new(-2.0, 2.0, 5)
                 .map(|x| format!("{:.1$}", x, 2))
                 .collect::<Vec<String>>(),

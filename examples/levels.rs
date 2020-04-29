@@ -26,7 +26,7 @@ fn main() {
         levels: LevelsOpts {
             min: -1.0,
             max: 1.0,
-            step: 0.5,
+            steps: 5,
         },
         is_image,
         res,
@@ -39,7 +39,7 @@ fn main() {
         levels: LevelsOpts {
             min: -2.0,
             max: 2.0,
-            step: 1.0,
+            steps: 5,
         },
         is_image,
         res,
@@ -52,7 +52,7 @@ fn main() {
         levels: LevelsOpts {
             min: -1.0,
             max: 1.0,
-            step: 0.5,
+            steps: 5,
         },
         is_image,
         res,
@@ -65,7 +65,7 @@ fn main() {
         levels: LevelsOpts {
             min: -2.0,
             max: 2.0,
-            step: 1.0,
+            steps: 5,
         },
         is_image,
         res,
@@ -78,7 +78,7 @@ fn main() {
         levels: LevelsOpts {
             min: -1.0,
             max: 1.0,
-            step: 0.5,
+            steps: 5,
         },
         is_image,
         res,
@@ -91,7 +91,7 @@ fn main() {
         levels: LevelsOpts {
             min: -2.0,
             max: 2.0,
-            step: 1.0,
+            steps: 5,
         },
         is_image,
         res,
@@ -104,7 +104,7 @@ fn main() {
         levels: LevelsOpts {
             min: -1.0,
             max: 1.0,
-            step: 0.5,
+            steps: 5,
         },
         is_image,
         res,
@@ -117,7 +117,7 @@ fn main() {
         levels: LevelsOpts {
             min: -2.0,
             max: 2.0,
-            step: 1.0,
+            steps: 5,
         },
         is_image,
         res,
@@ -130,7 +130,7 @@ fn main() {
         levels: LevelsOpts {
             min: -1.0,
             max: 1.0,
-            step: 0.5,
+            steps: 5,
         },
         is_image,
         res,
@@ -143,7 +143,7 @@ fn main() {
         levels: LevelsOpts {
             min: -2.0,
             max: 2.0,
-            step: 1.0,
+            steps: 5,
         },
         is_image,
         res,
@@ -156,7 +156,7 @@ fn main() {
         levels: LevelsOpts {
             min: -1.0,
             max: 1.0,
-            step: 0.5,
+            steps: 5,
         },
         is_image,
         res,
@@ -169,7 +169,7 @@ fn main() {
         levels: LevelsOpts {
             min: -2.0,
             max: 2.0,
-            step: 1.0,
+            steps: 5,
         },
         is_image,
         res,

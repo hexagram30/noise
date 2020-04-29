@@ -101,7 +101,7 @@ impl<'a, T> Levels<'a, T> {
     }
     /// Enables or disables the inversion of the terrain-forming curve between
     /// the control points.
-    pub fn invert_levelss(self, invert_levelss: bool) -> Self {
+    pub fn invert_levels(self, invert_levelss: bool) -> Self {
         Levels {
             invert_levelss,
             ..self
