@@ -30,9 +30,10 @@ pub struct FloatIterator {
 
 impl FloatIterator {
     pub fn new(start: f64, end: f64, steps: u64) -> Self {
+        let steps = steps - 1;
         FloatIterator {
             current: 0,
-            current_back: steps,
+            current_back: steps + 1,
             steps: steps,
             start: start,
             end: end,
@@ -42,7 +43,13 @@ impl FloatIterator {
     /// calculates number of steps from (end - start) / step
     pub fn new_with_step(start: f64, end: f64, step: f64) -> Self {
         let steps = ((end - start) / step).abs().round() as u64;
-        Self::new(start, end, steps)
+        FloatIterator {
+            current: 0,
+            current_back: steps,
+            steps: steps,
+            start: start,
+            end: end,
+        }
     }
 
     pub fn length(&self) -> u64 {
@@ -69,6 +76,10 @@ impl Iterator for FloatIterator {
         if self.current >= self.current_back {
             return None;
         }
+        // if self.current == self.current_back {
+        //     self.current += 1;
+        //     Some(self.end);
+        // }
         let result = self.at(self.current);
         self.current += 1;
         Some(result)
@@ -116,6 +127,40 @@ mod tests {
 
     #[test]
     fn test_float_iterator() {
+        assert_eq!(
+            FloatIterator::new(-2.0, 0.0, 5)
+                .map(|x| format!("{:.1$}", x, 2))
+                .collect::<Vec<String>>(),
+            ["-2.00", "-1.50", "-1.00", "-0.50", "0.00"]
+        );
+        assert_eq!(
+            FloatIterator::new(-2.0, 2.0, 5)
+                .map(|x| format!("{:.1$}", x, 2))
+                .collect::<Vec<String>>(),
+            ["-2.00", "-1.00", "0.00", "1.00", "2.00"]
+        );
+        assert_eq!(
+            FloatIterator::new(-2.0, 2.0, 11)
+                .map(|x| format!("{:.1$}", x, 2))
+                .collect::<Vec<String>>(),
+            [
+                "-2.00", "-1.60", "-1.20", "-0.80", "-0.40", "0.00", "0.40", "0.80", "1.20",
+                "1.60", "2.00"
+            ]
+        );
+        assert_eq!(
+            FloatIterator::new(-4.0, 10.0, 15)
+                .map(|x| format!("{:.1$}", x, 2))
+                .collect::<Vec<String>>(),
+            [
+                "-4.00", "-3.00", "-2.00", "-1.00", "-0.00", "1.00", "2.00", "3.00", "4.00",
+                "5.00", "6.00", "7.00", "8.00", "9.00", "10.00"
+            ]
+        );
+    }
+
+    #[test]
+    fn test_float_iterator_with_step() {
         assert_eq!(
             FloatIterator::new_with_step(-1.0, 1.0, 0.1)
                 .map(|x| format!("{:.1$}", x, 2))
