@@ -45,11 +45,15 @@ to see large image):
 
 [![Example Outputs][example]][example-large]
 
-And here's one of those generated with the ASCII output option, colored for land and sea:
+Here's one of them generated with the ASCII output option:
+
+[![Cave ASCII Output][cavesea-screen]][cave-screen-large]
+
+And here's another one colored for land and sea:
 
 [![Land/Sea ASCII Output][land-sea-screen]][land-sea-screen-large]
 
-Here's one generated with levels and colors useful for things like land cover:
+Here's one generated with more than two levels (and colors), useful for things like land cover:
 
 [![Land Cover ASCII Output][land-cover-screen]][land-cover-screen-large]
 
@@ -58,6 +62,8 @@ Here's one generated with levels and colors useful for things like land cover:
 
 [logo]: https://raw.githubusercontent.com/hexagram30/resources/master/branding/logo/h30-logo-2-long-with-text-x695.png
 [logo-large]: https://raw.githubusercontent.com/hexagram30/resources/master/branding/logo/h30-logo-2-long-with-text-x3440.png
+[cave-screen]: https://raw.githubusercontent.com/hexagram30/noise/master/assets/images/screenshot-caves-complex-billow-thumb.png
+[cave-screen-large]: https://raw.githubusercontent.com/hexagram30/noise/master/assets/images/screenshot-caves-complex-billow.png
 [land-sea-screen]: https://raw.githubusercontent.com/hexagram30/noise/master/assets/images/screesnhot-land-sea-fractured-hm-thumb.png
 [land-sea-screen-large]: https://raw.githubusercontent.com/hexagram30/noise/master/assets/images/screesnhot-land-sea-fractured-hm.png
 [land-cover-screen]: https://raw.githubusercontent.com/hexagram30/noise/master/assets/images/screenshot-levels-wobbly-walls-turbulence-thumb.png
