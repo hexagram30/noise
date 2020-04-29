@@ -49,7 +49,7 @@ to see large image):
 
 Here's one of them generated with the ASCII output option:
 
-[![Cave ASCII Output][cavesea-screen]][cave-screen-large]
+[![Cave ASCII Output][cave-screen]][cave-screen-large]
 
 And here's another one colored for land and sea:
 
