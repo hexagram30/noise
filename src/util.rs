@@ -53,7 +53,10 @@ pub struct FloatIterator {
 }
 
 impl FloatIterator {
-    pub fn new(start: f64, end: f64, steps: u64) -> Self {
+    pub fn new(start: f64, end: f64, mut steps: u64) -> Self {
+        if steps < 2 {
+            steps = 2;
+        }
         let steps = steps - 1;
         FloatIterator {
             current: 0,
@@ -169,6 +172,24 @@ mod tests {
 
     #[test]
     fn test_float_iterator() {
+        assert_eq!(
+            FloatIterator::new(-1.0, 1.0, 0)
+                .map(|x| format!("{:.1$}", x, 2))
+                .collect::<Vec<String>>(),
+            ["-1.00", "1.00"]
+        );
+        assert_eq!(
+            FloatIterator::new(-1.0, 1.0, 1)
+                .map(|x| format!("{:.1$}", x, 2))
+                .collect::<Vec<String>>(),
+            ["-1.00", "1.00"]
+        );
+        assert_eq!(
+            FloatIterator::new(-1.0, 1.0, 2)
+                .map(|x| format!("{:.1$}", x, 2))
+                .collect::<Vec<String>>(),
+            ["-1.00", "1.00"]
+        );
         assert_eq!(
             FloatIterator::new(-2.0, 0.0, 5)
                 .map(|x| format!("{:.1$}", x, 2))

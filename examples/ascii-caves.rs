@@ -1,6 +1,6 @@
 extern crate noise;
 
-use hxgm30noise::common::{ASCIIMapper, Char, Opts, Resolution};
+use hxgm30noise::common::{ASCIIMapper, Char, LevelsOpts, Opts, Resolution};
 use hxgm30noise::gen::caves;
 use twyg;
 
@@ -32,64 +32,81 @@ fn main() {
             color: None,
         },
     ]);
+    let ls = LevelsOpts {
+        min: -1.0,
+        max: 1.0,
+        steps: 1,
+    };
     let ascii_mapper = am.clone();
+    let levels = ls.clone();
     caves::complex(Opts {
         output: "caves-complex-billow.txt",
         threshold_cutoff: -0.25,
         is_ascii,
         ascii_mapper,
+        levels,
         res,
         seed,
         ..Default::default()
     });
 
     let ascii_mapper = am.clone();
+    let levels = ls.clone();
     caves::fractured(Opts {
         output: "caves-fractured-hm.txt",
         threshold_cutoff: 0.1,
         is_ascii,
         ascii_mapper,
+        levels,
         res,
         seed,
         ..Default::default()
     });
 
     let ascii_mapper = am.clone();
+    let levels = ls.clone();
     caves::jagged_walls(Opts {
         output: "caves-jagged-walls-fbm.txt",
         is_ascii,
         ascii_mapper,
+        levels,
         res,
         seed,
         ..Default::default()
     });
 
     let ascii_mapper = am.clone();
+    let levels = ls.clone();
     caves::linear(Opts {
         output: "caves-linear-rm.txt",
         threshold_cutoff: -0.4,
         is_ascii,
         ascii_mapper,
+        levels,
         res,
         seed,
         ..Default::default()
     });
 
     let ascii_mapper = am.clone();
+    let levels = ls.clone();
     caves::simple(Opts {
         output: "caves-simple-perlin.txt",
         is_ascii,
         ascii_mapper,
+        levels,
         res,
         seed,
         ..Default::default()
     });
 
     let ascii_mapper = am.clone();
+    let levels = ls.clone();
     caves::wobbly_walls(Opts {
         output: "caves-wobbly-walls-turbulence.txt",
         is_ascii,
         ascii_mapper,
+        levels,
         res,
         seed,
         ..Default::default()

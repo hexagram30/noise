@@ -24,7 +24,7 @@ run-cave-help: cli
 
 examples:
 	@cargo run --example=ascii-caves
-	@cargo run --example=ascii-and-sea
+	@cargo run --example=ascii-land-sea
 	@cargo run --example=ascii-levels
 	@cargo run --example=caves
 	@cargo run --example=levels
