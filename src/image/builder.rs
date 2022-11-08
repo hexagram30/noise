@@ -6,6 +6,7 @@ pub trait BuilderWriter {
 
 impl BuilderWriter for Builder<'_> {
     fn write(&self) {
+        log::debug!("Writing image to {} ...", &self.opts.output);
         self.noise_map.write_to_file(&self.opts.output);
     }
 }

@@ -12,6 +12,7 @@ pub trait ASCIIWriter {
 
 impl ASCIIWriter for NoiseMap {
     fn write(&self, filename: &str, opts: &Opts) {
+        log::debug!("Writing ASCII cave file ...");
         let ranges = FloatIterator::new(opts.levels.min, opts.levels.max, opts.levels.steps)
             .collect::<Vec<f64>>();
         log::trace!("Ranges: {:?}", ranges);
