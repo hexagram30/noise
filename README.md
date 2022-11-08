@@ -59,8 +59,13 @@ Here's one generated with more than two levels (and colors), useful for things l
 
 [![Land Cover ASCII Output][land-cover-screen]][land-cover-screen-large]
 
+## License
 
-<!-- Named page links below: /-->
+Copyright 2020-2022, Hexagram30 <hexagram30@cnbb.games>
+
+Apache License, Version 2.0
+
+[//]: ---Named-Links---
 
 [logo]: https://raw.githubusercontent.com/hexagram30/resources/master/branding/logo/h30-logo-2-long-with-text-x695.png
 [logo-large]: https://raw.githubusercontent.com/hexagram30/resources/master/branding/logo/h30-logo-2-long-with-text-x3440.png
