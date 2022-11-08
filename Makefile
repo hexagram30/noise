@@ -35,6 +35,7 @@ run-help: cli
 run-cave-help: cli
 	@$(BIN) cave --help
 
+.PHONY: examples
 examples:
 	@cargo run --example=ascii-caves
 	@cargo run --example=ascii-land-sea
@@ -46,4 +47,5 @@ clean:
 	@cargo clean
 	@rm -rf example_images/*
 
-.PHONY: examples
+publish:
+	@cargo publish
