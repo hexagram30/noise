@@ -146,7 +146,7 @@ fn main() {
         ..default_opts
     };
     let log_opts = twyg::LoggerOpts {
-        colored: true,
+        coloured: true,
         file: None,
         level: opts.log_level.to_string(),
         report_caller: true,

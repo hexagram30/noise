@@ -1,16 +1,26 @@
 BIN_DIR = ./bin
 BIN = target/release/noise
 
-default: build
+default: deps build
+
+auth:
+	@echo "Copy and paste the following in the terminal where you"
+	@echo "will be executing cargo commands:"
+	@echo
+	@echo '    eval $$(ssh-agent -s) && ssh-add'
+	@echo
 
 build: cli
+
+deps:
+	@cargo update
 
 $(BIN_DIR):
 	mkdir -p $(BIN_DIR)
 
 cli: $(BIN_DIR)
 	@cargo build --release
-	@rm $(BIN_DIR)/*
+	@rm -f $(BIN_DIR)/*
 	@cargo install --path . --root .
 
 run: cli
