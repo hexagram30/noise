@@ -18,6 +18,9 @@ deps:
 $(BIN_DIR):
 	mkdir -p $(BIN_DIR)
 
+test:
+	@cargo test
+
 cli: $(BIN_DIR)
 	@cargo build --release
 	@rm -f $(BIN_DIR)/*
