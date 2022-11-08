@@ -1,5 +1,5 @@
 use crate::modifiers::{Invert, Threshold};
-use ansi_term::Colour::RGB;
+use nu_ansi_term::Color::Rgb;
 use imgdata::color::{self, Color};
 use log;
 use noise::utils::{NoiseMap, NoiseMapBuilder, PlaneMapBuilder};
@@ -34,7 +34,7 @@ impl ASCIIMapper {
                 Some(color) => {
                     let c = color::from_hex(color.clone());
                     let [r, g, b] = c.rgb();
-                    chr_str = RGB(r, g, b).paint(chr_str.as_str()).to_string();
+                    chr_str = Rgb(r, g, b).paint(chr_str.as_str()).to_string();
                 }
                 None => (),
             }
