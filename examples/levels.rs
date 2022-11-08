@@ -6,7 +6,7 @@ use twyg;
 
 fn main() {
     let log_opts = twyg::LoggerOpts {
-        colored: true,
+        coloured: true,
         file: None,
         level: String::from("info"),
         report_caller: true,
