@@ -1,6 +1,6 @@
 extern crate noise;
 
-use hxgm30noise::common::{ASCIIMapper, Char, LevelsOpts, Opts, Resolution};
+use hxgm30noise::options::{ASCIIMapper, Char, LevelsOpts, Options, Resolution};
 use hxgm30noise::gen::caves;
 use twyg;
 
@@ -8,7 +8,7 @@ fn main() {
     let log_opts = twyg::LoggerOpts {
         coloured: true,
         file: None,
-        level: String::from("info"),
+        level: "info".to_string(),
         report_caller: true,
     };
 
@@ -39,8 +39,8 @@ fn main() {
     };
     let ascii_mapper = am.clone();
     let levels = ls.clone();
-    caves::complex(Opts {
-        output: "caves-complex-billow.txt",
+    caves::complex(Options {
+        output: "caves-complex-billow.txt".to_string(),
         threshold_cutoff: -0.25,
         is_ascii,
         ascii_mapper,
@@ -52,8 +52,8 @@ fn main() {
 
     let ascii_mapper = am.clone();
     let levels = ls.clone();
-    caves::fractured(Opts {
-        output: "caves-fractured-hm.txt",
+    caves::fractured(Options {
+        output: "caves-fractured-hm.txt".to_string(),
         threshold_cutoff: 0.1,
         is_ascii,
         ascii_mapper,
@@ -65,8 +65,8 @@ fn main() {
 
     let ascii_mapper = am.clone();
     let levels = ls.clone();
-    caves::jagged_walls(Opts {
-        output: "caves-jagged-walls-fbm.txt",
+    caves::jagged_walls(Options {
+        output: "caves-jagged-walls-fbm.txt".to_string(),
         is_ascii,
         ascii_mapper,
         levels,
@@ -77,8 +77,8 @@ fn main() {
 
     let ascii_mapper = am.clone();
     let levels = ls.clone();
-    caves::linear(Opts {
-        output: "caves-linear-rm.txt",
+    caves::linear(Options {
+        output: "caves-linear-rm.txt".to_string(),
         threshold_cutoff: -0.4,
         is_ascii,
         ascii_mapper,
@@ -90,8 +90,8 @@ fn main() {
 
     let ascii_mapper = am.clone();
     let levels = ls.clone();
-    caves::simple(Opts {
-        output: "caves-simple-perlin.txt",
+    caves::simple(Options {
+        output: "caves-simple-perlin.txt".to_string(),
         is_ascii,
         ascii_mapper,
         levels,
@@ -102,8 +102,8 @@ fn main() {
 
     let ascii_mapper = am.clone();
     let levels = ls.clone();
-    caves::wobbly_walls(Opts {
-        output: "caves-wobbly-walls-turbulence.txt",
+    caves::wobbly_walls(Options {
+        output: "caves-wobbly-walls-turbulence.txt".to_string(),
         is_ascii,
         ascii_mapper,
         levels,

@@ -1,6 +1,6 @@
 extern crate noise;
 
-use hxgm30noise::common::{Opts, Resolution};
+use hxgm30noise::options::{Options, Resolution};
 use hxgm30noise::gen::caves;
 use twyg;
 
@@ -8,7 +8,7 @@ fn main() {
     let log_opts = twyg::LoggerOpts {
         coloured: true,
         file: None,
-        level: String::from("info"),
+        level: "info".to_string(),
         report_caller: true,
     };
 
@@ -21,8 +21,8 @@ fn main() {
     let seed = 108;
     let is_image = true;
 
-    caves::complex(Opts {
-        output: "caves-complex-billow.png",
+    caves::complex(Options {
+        output: "caves-complex-billow.png".to_string(),
         threshold_cutoff: -0.25,
         is_image,
         res,
@@ -30,8 +30,8 @@ fn main() {
         ..Default::default()
     });
 
-    caves::fractured(Opts {
-        output: "caves-fractured-hm.png",
+    caves::fractured(Options {
+        output: "caves-fractured-hm.png".to_string(),
         threshold_cutoff: 0.1,
         is_image,
         res,
@@ -39,16 +39,16 @@ fn main() {
         ..Default::default()
     });
 
-    caves::jagged_walls(Opts {
-        output: "caves-jagged-walls-fbm.png",
+    caves::jagged_walls(Options {
+        output: "caves-jagged-walls-fbm.png".to_string(),
         is_image,
         res,
         seed,
         ..Default::default()
     });
 
-    caves::linear(Opts {
-        output: "caves-linear-rm.png",
+    caves::linear(Options {
+        output: "caves-linear-rm.png".to_string(),
         threshold_cutoff: -0.4,
         is_image,
         res,
@@ -56,16 +56,16 @@ fn main() {
         ..Default::default()
     });
 
-    caves::simple(Opts {
-        output: "caves-simple-perlin.png",
+    caves::simple(Options {
+        output: "caves-simple-perlin.png".to_string(),
         is_image,
         res,
         seed,
         ..Default::default()
     });
 
-    caves::wobbly_walls(Opts {
-        output: "caves-wobbly-walls-turbulence.png",
+    caves::wobbly_walls(Options {
+        output: "caves-wobbly-walls-turbulence.png".to_string(),
         is_image,
         res,
         seed,

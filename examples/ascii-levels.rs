@@ -1,6 +1,6 @@
 extern crate noise;
 
-use hxgm30noise::common::{ASCIIMapper, Char, LevelsOpts, Opts, Resolution};
+use hxgm30noise::options::{ASCIIMapper, Char, LevelsOpts, Options, Resolution};
 use hxgm30noise::gen::levels;
 use twyg;
 
@@ -8,7 +8,7 @@ fn main() {
     let log_opts = twyg::LoggerOpts {
         coloured: true,
         file: None,
-        level: String::from("warn"),
+        level: "warn".to_string(),
         report_caller: true,
     };
 
@@ -49,8 +49,8 @@ fn main() {
     ]);
 
     let ascii_mapper = am.clone();
-    levels::complex(Opts {
-        output: "levels-complex-billow.txt",
+    levels::complex(Options {
+        output: "levels-complex-billow.txt".to_string(),
         levels: LevelsOpts {
             min: -2.0,
             max: 2.0,
@@ -64,8 +64,8 @@ fn main() {
     });
 
     let ascii_mapper = am.clone();
-    levels::fractured(Opts {
-        output: "levels-fractured-hm.txt",
+    levels::fractured(Options {
+        output: "levels-fractured-hm.txt".to_string(),
         levels: LevelsOpts {
             min: -2.0,
             max: 2.0,
@@ -79,8 +79,8 @@ fn main() {
     });
 
     let ascii_mapper = am.clone();
-    levels::jagged_walls(Opts {
-        output: "levels-jagged-walls-fbm.txt",
+    levels::jagged_walls(Options {
+        output: "levels-jagged-walls-fbm.txt".to_string(),
         levels: LevelsOpts {
             min: -2.0,
             max: 2.0,
@@ -94,8 +94,8 @@ fn main() {
     });
 
     let ascii_mapper = am.clone();
-    levels::linear(Opts {
-        output: "levels-linear-rm.txt",
+    levels::linear(Options {
+        output: "levels-linear-rm.txt".to_string(),
         levels: LevelsOpts {
             min: -2.0,
             max: 2.0,
@@ -109,8 +109,8 @@ fn main() {
     });
 
     let ascii_mapper = am.clone();
-    levels::simple(Opts {
-        output: "levels-simple-perlin.txt",
+    levels::simple(Options {
+        output: "levels-simple-perlin.txt".to_string(),
         levels: LevelsOpts {
             min: -2.0,
             max: 2.0,
@@ -151,8 +151,8 @@ fn main() {
         },
     ]);
     let ascii_mapper = am.clone();
-    levels::wobbly_walls(Opts {
-        output: "levels-wobbly-walls-turbulence.txt",
+    levels::wobbly_walls(Options {
+        output: "levels-wobbly-walls-turbulence.txt".to_string(),
         levels: LevelsOpts {
             min: -1.0,
             max: 1.0,
