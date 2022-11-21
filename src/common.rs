@@ -1,25 +1,30 @@
-use crate::modifiers::{Invert, Threshold};
-use nu_ansi_term::Color::Rgb;
+use std::collections::HashMap;
 use imgdata::color::{self, Color};
 use log;
 use noise::utils::{NoiseMap, NoiseMapBuilder, PlaneMapBuilder};
 use noise::NoiseFn;
-use std::collections::HashMap;
+use nu_ansi_term::Color::Rgb;
+use serde_derive::{Deserialize, Serialize};
+use super::modifiers::{Invert, Threshold};
 
-#[derive(Clone, Copy, Debug, Default)]
+
+#[derive(Clone, Copy, Debug, Default, Deserialize, Serialize)]
+#[allow(unused)]
 pub struct Resolution {
     pub x: usize,
     pub y: usize,
 }
 
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug, Default, Deserialize, Serialize)]
+#[allow(unused)]
 pub struct Char {
     pub value: f64,
     pub chr: char,
     pub color: Option<String>,
 }
 
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug, Default, Deserialize, Serialize)]
+#[allow(unused)]
 pub struct ASCIIMapper {
     pub chars: Vec<Char>,
     pub lookup: HashMap<String, String>,
@@ -45,7 +50,8 @@ impl ASCIIMapper {
         return ASCIIMapper { chars, lookup };
     }
 }
-#[derive(Clone, Copy, Debug, Default)]
+#[derive(Clone, Copy, Debug, Default, Deserialize, Serialize)]
+#[allow(unused)]
 pub struct LevelsOpts {
     pub min: f64,
     pub max: f64,
@@ -59,24 +65,26 @@ impl LevelsOpts {
     }
 }
 
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug, Default, Deserialize, Serialize)]
+#[allow(unused)]
 pub struct Opts<'a> {
     pub inverted: bool,
     pub is_cave: bool,
     pub is_image: bool,
     pub is_ascii: bool,
-    pub ascii_mapper: ASCIIMapper,
-    pub levels: LevelsOpts,
     pub log_level: &'a str,
     pub noise_type: &'a str,
     pub output: &'a str,
     pub seed: u32,
-    pub res: Resolution,
     pub res_str: &'a str,
     pub threshold_cutoff: f64,
     pub threshold_enabled: bool,
     pub tiled: bool,
     pub turbulence: bool,
+    pub config_paths: Vec<String>,
+    pub res: Resolution,
+    pub levels: LevelsOpts,
+    pub ascii_mapper: ASCIIMapper,
 }
 
 pub struct Builder<'a> {

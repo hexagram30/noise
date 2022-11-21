@@ -2,21 +2,45 @@
 extern crate clap;
 
 use clap::{App, Arg};
+use log;
+
+use confyg::{Confygery, conf};
+use twyg;
+
 use hxgm30noise::common::{Opts, Resolution};
 use hxgm30noise::gen::caves;
-use log;
-use twyg;
 
 fn main() {
     // Default values /////////////////////////////////////////
     let default_opts: Opts = Opts {
-        log_level: &String::from("debug"),
-        output: &String::from("/tmp/file.png"),
-        res: Resolution { x: 100, y: 100 },
-        res_str: &String::from("100,100"),
+        log_level: "debug",
+        output: "/tmp/file.png",
+        res_str: "100,100",
         seed: 108,
+        config_paths: vec![
+            "./config".to_string(),
+            "~/.config/hxgm30/noise".to_string(),
+        ],
 
         .. Default::default()
+    };
+
+    // Config values //////////////////////////////////////////
+    let conf_opts = conf::Options{
+        paths: default_opts.config_paths.clone(),
+
+        .. Default::default()
+    };
+    let mut cfgery = Confygery::new();
+    let result = cfgery
+        .with_opts(conf_opts)
+        .add_struct(&default_opts)
+        .add_file("noise.toml")
+        .add_file("config.toml")
+        .build::<Opts>();
+    let cfg = match result {
+        Ok(x) => x,
+        Err(_) => default_opts.clone(),
     };
     // Noise types ////////////////////////////////////////////
     let noise_types = [
@@ -111,10 +135,10 @@ fn main() {
         .get_matches();
 
     // Convert args to appropriate types //////////////////////
-    let output = matches.value_of("file-name").unwrap_or(default_opts.output);
+    let output = matches.value_of("file-name").unwrap_or(cfg.output);
     let log_level = matches
         .value_of("log-level")
-        .unwrap_or(default_opts.log_level);
+        .unwrap_or(cfg.log_level);
     let opts: Opts = Opts {
         inverted: if matches.is_present("invert?") {
             true
@@ -124,16 +148,16 @@ fn main() {
         log_level: &log_level.to_string(),
         output: &output.to_string(),
         res: max_coords_or(
-            matches.value_of("x,y").unwrap_or(&default_opts.res_str),
-            default_opts.res,
+            matches.value_of("x,y").unwrap_or(&cfg.res_str),
+            cfg.res,
         ),
-        seed: value_t!(matches, "seed-number", u32).unwrap_or(default_opts.seed),
+        seed: value_t!(matches, "seed-number", u32).unwrap_or(cfg.seed),
         threshold_enabled: if matches.is_present("cutoff") {
             true
         } else {
             false
         },
-        threshold_cutoff: value_t!(matches, "cutoff", f64).unwrap_or(default_opts.threshold_cutoff),
+        threshold_cutoff: value_t!(matches, "cutoff", f64).unwrap_or(cfg.threshold_cutoff),
         tiled: if matches.is_present("tiled?") {
             true
         } else {
@@ -144,7 +168,7 @@ fn main() {
         } else {
             false
         },
-        ..default_opts
+        ..cfg
     };
     let log_opts = twyg::LoggerOpts {
         coloured: true,
