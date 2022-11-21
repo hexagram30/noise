@@ -15,7 +15,8 @@ fn main() {
         res: Resolution { x: 100, y: 100 },
         res_str: &String::from("100,100"),
         seed: 108,
-        ..Default::default()
+
+        .. Default::default()
     };
     // Noise types ////////////////////////////////////////////
     let noise_types = [
