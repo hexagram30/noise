@@ -9,7 +9,7 @@ use super::options::Options;
 
 pub struct Builder<'a> {
     pub noise_fn: &'a dyn NoiseFn<[f64; 3]>,
-    pub opts: &'a Options<'a>,
+    pub opts: &'a Options,
     pub noise_map: NoiseMap,
 }
 
@@ -23,7 +23,7 @@ impl<'a> Builder<'a> {
     }
     fn build(&self, noise_fn: &'a dyn NoiseFn<[f64; 3]>) -> NoiseMap {
         let noise_map = PlaneMapBuilder::new(noise_fn)
-            .set_size(self.opts.res.x, self.opts.res.y)
+            .set_size(self.opts.resolution().x, self.opts.resolution().y)
             .set_is_seamless(self.opts.tiled)
             .build();
         return noise_map;

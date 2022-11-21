@@ -6,16 +6,16 @@ use serde_derive::{Deserialize, Serialize};
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 #[allow(unused)]
-pub struct Options<'a> {
+pub struct Options {
     pub inverted: bool,
     pub is_cave: bool,
     pub is_image: bool,
     pub is_ascii: bool,
-    pub log_level: &'a str,
-    pub noise_type: &'a str,
-    pub output: &'a str,
+    pub log_level: String,
+    pub noise_type: String,
+    pub output: String,
     pub seed: u32,
-    pub res_str: &'a str,
+    pub res_str: String,
     pub threshold_cutoff: f64,
     pub threshold_enabled: bool,
     pub tiled: bool,
@@ -24,6 +24,19 @@ pub struct Options<'a> {
     pub res: Resolution,
     pub levels: LevelsOpts,
     pub ascii_mapper: ASCIIMapper,
+}
+
+impl Options {
+    pub fn resolution(&self) -> Resolution {
+        if self.res_str == "" {
+            return self.res
+        }
+        let xy: Vec<usize> = self.res_str.split(',').map(|s| s.parse().unwrap()).collect();
+        Resolution {
+            x: xy[0],
+            y: xy[1],
+        }
+    }
 }
 
 #[derive(Clone, Copy, Debug, Default, Deserialize, Serialize)]

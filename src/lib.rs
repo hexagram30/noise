@@ -9,6 +9,7 @@ pub use self::util::*;
 
 pub mod ascii;
 pub mod common;
+pub mod config;
 pub mod gen;
 pub mod image;
 pub mod modifiers;

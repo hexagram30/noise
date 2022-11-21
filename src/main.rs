@@ -3,17 +3,17 @@ extern crate clap;
 
 use clap::{App, Arg};
 use log;
-use confyg::{Confygery, conf};
 use twyg;
+use hxgm30noise::config;
 use hxgm30noise::gen::caves;
-use hxgm30noise::options::{Options, Resolution};
+use hxgm30noise::options::Options;
 
 fn main() {
-    // Default values /////////////////////////////////////////
+    // Configuration //////////////////////////////////////////
     let default_opts: Options = Options {
-        log_level: "debug",
-        output: "/tmp/file.png",
-        res_str: "100,100",
+        log_level: "debug".to_string(),
+        output: "/tmp/file.png".to_string(),
+        res_str: "100,100".to_string(),
         seed: 108,
         config_paths: vec![
             "./config".to_string(),
@@ -23,23 +23,8 @@ fn main() {
         .. Default::default()
     };
 
-    // Config values //////////////////////////////////////////
-    let conf_opts = conf::Options{
-        paths: default_opts.config_paths.clone(),
+    let cfg = config::build(default_opts);
 
-        .. Default::default()
-    };
-    let mut cfgery = Confygery::new();
-    let result = cfgery
-        .with_opts(conf_opts)
-        .add_struct(&default_opts)
-        .add_file("noise.toml")
-        .add_file("config.toml")
-        .build::<Options>();
-    let cfg = match result {
-        Ok(x) => x,
-        Err(_) => default_opts.clone(),
-    };
     // Noise types ////////////////////////////////////////////
     let noise_types = [
         "basic-multi",
@@ -133,22 +118,18 @@ fn main() {
         .get_matches();
 
     // Convert args to appropriate types //////////////////////
-    let output = matches.value_of("file-name").unwrap_or(cfg.output);
+    let output = matches.value_of("file-name".to_string()).unwrap_or(&cfg.output);
     let log_level = matches
-        .value_of("log-level")
-        .unwrap_or(cfg.log_level);
+        .value_of("log-level".to_string())
+        .unwrap_or(&cfg.log_level);
     let opts: Options = Options {
         inverted: if matches.is_present("invert?") {
             true
         } else {
             false
         },
-        log_level: &log_level.to_string(),
-        output: &output.to_string(),
-        res: max_coords_or(
-            matches.value_of("x,y").unwrap_or(&cfg.res_str),
-            cfg.res,
-        ),
+        log_level: log_level.to_string(),
+        output: output.to_string(),
         seed: value_t!(matches, "seed-number", u32).unwrap_or(cfg.seed),
         threshold_enabled: if matches.is_present("cutoff") {
             true
@@ -174,7 +155,6 @@ fn main() {
         level: opts.log_level.to_string(),
         report_caller: true,
     };
-
     match twyg::setup_logger(&log_opts) {
         Ok(_) => {}
         Err(error) => panic!("Could not setup logger: {:?}", error),
@@ -242,21 +222,5 @@ fn main() {
             _ => unreachable!(),
         },
         _ => unreachable!(),
-    }
-}
-
-fn coord_vec(val: &str) -> Vec<usize> {
-    return val.split(',').map(|s| s.parse().unwrap()).collect();
-}
-
-fn max_coords_or(val: &str, default: Resolution) -> Resolution {
-    if val == "" {
-        return default;
-    } else {
-        let coord = coord_vec(val);
-        return Resolution {
-            x: coord[0],
-            y: coord[1],
-        };
     }
 }

@@ -6,7 +6,7 @@ use noise::{Billow, Fbm, HybridMulti, Perlin, RidgedMulti, Seedable, Turbulence}
 pub fn complex(opts: Options) {
     log::debug!("Setting up generator for complex cave type ...");
     let cave_opts: Options = Options {
-        noise_type: &"billow".to_string(),
+        noise_type: "billow".to_string(),
         threshold_enabled: true,
         ..opts
     };
@@ -27,7 +27,7 @@ pub fn complex(opts: Options) {
 pub fn fractured(opts: Options) {
     log::debug!("Setting up generator for fractured cave type ...");
     let cave_opts: Options = Options {
-        noise_type: &"hybrid-multi".to_string(),
+        noise_type: "hybrid-multi".to_string(),
         threshold_enabled: true,
         ..opts
     };
@@ -48,7 +48,7 @@ pub fn fractured(opts: Options) {
 pub fn jagged_walls(opts: Options) {
     log::debug!("Setting up generator for jagged cave type ...");
     let cave_opts: Options = Options {
-        noise_type: &"fbm".to_string(),
+        noise_type: "fbm".to_string(),
         threshold_enabled: true,
         ..opts
     };
@@ -70,7 +70,7 @@ pub fn linear(opts: Options) {
     log::debug!("Setting up generator for linear cave type ...");
     let cave_opts: Options = Options {
         inverted: true,
-        noise_type: &"ridge-multi".to_string(),
+        noise_type: "ridge-multi".to_string(),
         threshold_enabled: true,
         ..opts
     };
@@ -91,7 +91,7 @@ pub fn linear(opts: Options) {
 pub fn simple(opts: Options) {
     log::debug!("Setting up generator for simple cave type ...");
     let cave_opts: Options = Options {
-        noise_type: &"perlin".to_string(),
+        noise_type: "perlin".to_string(),
         threshold_enabled: true,
         ..opts
     };
@@ -112,7 +112,7 @@ pub fn simple(opts: Options) {
 pub fn wobbly_walls(opts: Options) {
     log::debug!("Setting up generator for wobbly cave type ...");
     let cave_opts: Options = Options {
-        noise_type: &"perlin".to_string(),
+        noise_type: "perlin".to_string(),
         threshold_enabled: true,
         turbulence: true,
         ..opts
