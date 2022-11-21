@@ -3,16 +3,14 @@ extern crate clap;
 
 use clap::{App, Arg};
 use log;
-
 use confyg::{Confygery, conf};
 use twyg;
-
-use hxgm30noise::common::{Opts, Resolution};
 use hxgm30noise::gen::caves;
+use hxgm30noise::options::{Options, Resolution};
 
 fn main() {
     // Default values /////////////////////////////////////////
-    let default_opts: Opts = Opts {
+    let default_opts: Options = Options {
         log_level: "debug",
         output: "/tmp/file.png",
         res_str: "100,100",
@@ -37,7 +35,7 @@ fn main() {
         .add_struct(&default_opts)
         .add_file("noise.toml")
         .add_file("config.toml")
-        .build::<Opts>();
+        .build::<Options>();
     let cfg = match result {
         Ok(x) => x,
         Err(_) => default_opts.clone(),
@@ -139,7 +137,7 @@ fn main() {
     let log_level = matches
         .value_of("log-level")
         .unwrap_or(cfg.log_level);
-    let opts: Opts = Opts {
+    let opts: Options = Options {
         inverted: if matches.is_present("invert?") {
             true
         } else {

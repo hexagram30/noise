@@ -1,17 +1,18 @@
-use crate::common::{Builder, Opts};
-use crate::util::{binary_search, FloatIterator};
 use log;
 use noise::utils::NoiseMap;
 use std::fs::File;
 use std::io::{LineWriter, Write};
 use std::{self, path::Path};
+use crate::common::Builder;
+use crate::options::Options;
+use crate::util::{binary_search, FloatIterator};
 
 pub trait ASCIIWriter {
-    fn write(&self, filename: &str, opts: &Opts);
+    fn write(&self, filename: &str, opts: &Options);
 }
 
 impl ASCIIWriter for NoiseMap {
-    fn write(&self, filename: &str, opts: &Opts) {
+    fn write(&self, filename: &str, opts: &Options) {
         log::debug!("Writing ASCII cave file ...");
         let ranges = FloatIterator::new(opts.levels.min, opts.levels.max, opts.levels.steps)
             .collect::<Vec<f64>>();

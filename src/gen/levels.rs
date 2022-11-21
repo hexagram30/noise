@@ -1,11 +1,12 @@
-use crate::common::{Builder, Opts};
+use crate::common::Builder;
+use crate::options::Options;
 use crate::modifiers::levels::Levels;
 // use noise::Utils::ColorGradient;
 use noise::{Billow, Fbm, HybridMulti, Perlin, RidgedMulti, Seedable, Turbulence};
 
-pub fn complex(opts: Opts) {
+pub fn complex(opts: Options) {
     log::debug!("Setting up generator for complex level type ...");
-    let levels_opts: Opts = Opts {
+    let levels_opts: Options = Options {
         noise_type: &"billow".to_string(),
         threshold_enabled: false,
         ..opts
@@ -29,9 +30,9 @@ pub fn complex(opts: Opts) {
     }
 }
 
-pub fn fractured(opts: Opts) {
+pub fn fractured(opts: Options) {
     log::debug!("Setting up generator for fractured level type ...");
-    let levels_opts: Opts = Opts {
+    let levels_opts: Options = Options {
         noise_type: &"hybrid-multi".to_string(),
         threshold_enabled: false,
         ..opts
@@ -55,9 +56,9 @@ pub fn fractured(opts: Opts) {
     }
 }
 
-pub fn jagged_walls(opts: Opts) {
+pub fn jagged_walls(opts: Options) {
     log::debug!("Setting up generator for jagged level type ...");
-    let levels_opts: Opts = Opts {
+    let levels_opts: Options = Options {
         noise_type: &"fbm".to_string(),
         threshold_enabled: false,
         ..opts
@@ -81,9 +82,9 @@ pub fn jagged_walls(opts: Opts) {
     }
 }
 
-pub fn linear(opts: Opts) {
+pub fn linear(opts: Options) {
     log::debug!("Setting up generator for linear level type ...");
-    let levels_opts: Opts = Opts {
+    let levels_opts: Options = Options {
         inverted: true,
         noise_type: &"ridge-multi".to_string(),
         threshold_enabled: false,
@@ -108,9 +109,9 @@ pub fn linear(opts: Opts) {
     }
 }
 
-pub fn simple(opts: Opts) {
+pub fn simple(opts: Options) {
     log::debug!("Setting up generator for simple level type ...");
-    let levels_opts: Opts = Opts {
+    let levels_opts: Options = Options {
         noise_type: &"perlin".to_string(),
         threshold_enabled: false,
         ..opts
@@ -134,9 +135,9 @@ pub fn simple(opts: Opts) {
     }
 }
 
-pub fn wobbly_walls(opts: Opts) {
+pub fn wobbly_walls(opts: Options) {
     log::debug!("Setting up generator for wobbly level type ...");
-    let levels_opts: Opts = Opts {
+    let levels_opts: Options = Options {
         noise_type: &"perlin".to_string(),
         threshold_enabled: false,
         turbulence: true,

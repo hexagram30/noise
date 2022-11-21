@@ -12,4 +12,5 @@ pub mod common;
 pub mod gen;
 pub mod image;
 pub mod modifiers;
+pub mod options;
 pub mod util;
